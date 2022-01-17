@@ -1,0 +1,17 @@
+{
+  "name": "divinity-js",
+  "version": "1.0.0",
+  "description": "Client library for Divinity game server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/client/web-server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "open": "^8.4.0"
+  }
+}
