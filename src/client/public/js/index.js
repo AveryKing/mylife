@@ -53,21 +53,19 @@ const startGameLoading = () => {
     h3.innerText = 'Loading...';
     h3.style.fontWeight = 'bold';
     h3.id = 'loading-text';
-    document.body.appendChild(h3);
+   // document.body.appendChild(h3);
 
 
 }
 
 const buildGameCanvas = (playerData) => {
     playerData = playerData.playerData;
-    console.log(playerData);
     let canvas = document.createElement('canvas');
     canvas.width = 800;
     canvas.height = 600;
     canvas.style.border = '2px solid black';
     canvas.style.borderRadius = '10px';
-    const ctx = canvas.getContext('2d');
-    ctx.font = "20px Arial";
-    ctx.fillText(`Coins: ${playerData.coins}`, 10, 30);
     document.body.appendChild(canvas);
+
+
 }
