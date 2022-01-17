@@ -2,3 +2,11 @@
     text-align:center;
     margin-top:30vh;
 }
+
+body {
+    text-align:center;
+}
+
+canvas {
+    margin-top:5vh
+}
