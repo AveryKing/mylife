@@ -11,5 +11,6 @@
     <orderEntry type="library" name="createjs" level="application" />
     <orderEntry type="library" name="phaser" level="application" />
     <orderEntry type="library" name="pixi.js" level="application" />
+    <orderEntry type="library" name="gsap" level="application" />
   </component>
 </module>

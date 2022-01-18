@@ -1,5 +1,6 @@
 import Divinity from "../divinity/divinity.js";
 const path = 'ws://127.0.0.1:6969/Game';
+
 const divinity = new Divinity(path);
 document.addEventListener('loginResponse', (e) => {
     e.detail.success ? loginSuccess() : loginFail();
@@ -59,21 +60,24 @@ const startGameLoading = () => {
 
 let avatar;
 let gameCanvas;
+let stage;
 const buildGameCanvas = (playerData) => {
     let app = new PIXI.Application({
         width: 800,
         height: 600,
-        backgroundColor:0XD2D2D2
+        backgroundColor:0xFFFFFF,
     });
-    document.body.appendChild(app.view);
+    stage = app.stage;
     gameCanvas = app.view;
+    gameCanvas.style.border = "2px solid black";
+    gameCanvas.style.borderRadius = "10px";
+    document.body.appendChild(app.view);
     playerData = playerData.playerData;
     loadMyAvatar(app);
     app.stage.interactive = true;
 
     gameCanvas.addEventListener('click', (e) => {
-       let {clickX, clickY} = getMousePosition(gameCanvas, e)
-        let elapsed = 0.0;
+        movePlayer(getMousePosition(gameCanvas,e));
 
     })
 }
@@ -87,7 +91,7 @@ const loadMyAvatar = (app) => {
     circle.drawCircle(30, 30, 30)
     circle.endFill();
     const namePlate = new PIXI.Graphics();
-    namePlate.beginFill(0xFFFFFF);
+    namePlate.beginFill(0xC7C7C7);
     namePlate.drawRoundedRect(0, 0, 80, 20, 10);
     namePlate.endFill();
     namePlate.x = circle.x -10
@@ -100,19 +104,13 @@ const loadMyAvatar = (app) => {
 
 }
 
-const movePlayer = (e) => {
-    alert(e.data.global.x);
-    let pos = e.data.global;
-    avatar.x = pos.x;
-    avatar.y = pos.y;
+const movePlayer = ({x,y}) => {
+    gsap.to(avatar, {duration:1, x:x, y:y})
 }
 
 const getMousePosition = (canvas, event) => {
     let rect = canvas.getBoundingClientRect();
     let x = event.clientX - rect.left;
     let y = event.clientY - rect.top;
-    console.log("Coordinate x: " + x,
-        "Coordinate y: " + y);
-
     return {x: x, y:y};
 }
