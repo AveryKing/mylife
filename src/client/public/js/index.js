@@ -30,7 +30,6 @@ const loginSuccess = () => {
     startGameLoading();
    // buildGameCanvas();
 }
-
 const loginFail = () => {
     if(!loginFailed) {
         loginFailed = true;
@@ -58,14 +57,62 @@ const startGameLoading = () => {
 
 }
 
+let avatar;
+let gameCanvas;
 const buildGameCanvas = (playerData) => {
+    let app = new PIXI.Application({
+        width: 800,
+        height: 600,
+        backgroundColor:0XD2D2D2
+    });
+    document.body.appendChild(app.view);
+    gameCanvas = app.view;
     playerData = playerData.playerData;
-    let canvas = document.createElement('canvas');
-    canvas.width = 800;
-    canvas.height = 600;
-    canvas.style.border = '2px solid black';
-    canvas.style.borderRadius = '10px';
-    document.body.appendChild(canvas);
+    loadMyAvatar(app);
+    app.stage.interactive = true;
+
+    gameCanvas.addEventListener('click', (e) => {
+       let {clickX, clickY} = getMousePosition(gameCanvas, e)
+        let elapsed = 0.0;
+
+    })
+}
+
+const loadMyAvatar = (app) => {
+    avatar = new PIXI.Container();
+    avatar.x = app.view.width/2
+    avatar.y = app.view.height/2
+    const circle  = new PIXI.Graphics();
+    circle.beginFill(0x57B1FF);
+    circle.drawCircle(30, 30, 30)
+    circle.endFill();
+    const namePlate = new PIXI.Graphics();
+    namePlate.beginFill(0xFFFFFF);
+    namePlate.drawRoundedRect(0, 0, 80, 20, 10);
+    namePlate.endFill();
+    namePlate.x = circle.x -10
+    namePlate.y = circle.y +65
+    avatar.addChild(circle);
+    avatar.addChild(namePlate);
+    app.stage.addChild(avatar)
+    return avatar;
 
 
+}
+
+const movePlayer = (e) => {
+    alert(e.data.global.x);
+    let pos = e.data.global;
+    avatar.x = pos.x;
+    avatar.y = pos.y;
+}
+
+const getMousePosition = (canvas, event) => {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    console.log("Coordinate x: " + x,
+        "Coordinate y: " + y);
+
+    return {x: x, y:y};
 }
