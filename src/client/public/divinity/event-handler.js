@@ -2,8 +2,9 @@ import Responses from "./responses.js";
 import Player from "./player.js";
 
 export default class EventHandler {
-    constructor(divinity) {
+    constructor(divinity, game) {
         this.divinity = divinity;
+        this.game = game;
         this.setupEventListeners();
     }
 
@@ -30,8 +31,22 @@ export default class EventHandler {
                 //data.data.success ? this.loginSuccess() : this.loginFail();
                 break;
             case Responses.UserDataResponse:
-                this.divinity.player = new Player(data.data);
+                this.divinity.player = new Player(this.game, data.data);
                 break;
+            case Responses.UserMovedResponse:
+                // console.log(data);
+                break;
+            case Responses.UserJoinedResponse:
+                // console.log(data);
+                break;
+            case Responses.LoadRoomResponse:
+                const players = Object.keys(data.data)
+                    .filter(x => x.startsWith('player'))
+                    .map(x => data.data[x]);
+                const roomLoadedEvent = new CustomEvent('roomLoaded', {
+                    detail: players
+                });
+                document.dispatchEvent(roomLoadedEvent)
         }
     }
 

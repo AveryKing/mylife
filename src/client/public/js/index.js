@@ -1,6 +1,6 @@
 import Divinity from "../divinity/divinity.js";
 const path = 'ws://127.0.0.1:6969/Game';
-
+let app;
 const divinity = new Divinity(path);
 document.addEventListener('loginResponse', (e) => {
     e.detail.success ? loginSuccess() : loginFail();
@@ -8,6 +8,15 @@ document.addEventListener('loginResponse', (e) => {
 
 document.addEventListener('loadingComplete', (e) => {
     buildGameCanvas(e.detail);
+})
+
+document.addEventListener('roomLoaded', (e) => {
+    console.log(e.detail);
+    e.detail.forEach(player => {
+        loadMyAvatar(app,player.username);
+    })
+    //loadMyAvatar(app,)
+
 })
 
 const get = (id) => {
@@ -62,7 +71,7 @@ let avatar;
 let gameCanvas;
 let stage;
 const buildGameCanvas = (playerData) => {
-    let app = new PIXI.Application({
+     app = new PIXI.Application({
         width: 800,
         height: 600,
         backgroundColor:0xFFFFFF,
@@ -72,17 +81,19 @@ const buildGameCanvas = (playerData) => {
     gameCanvas.style.border = "2px solid black";
     gameCanvas.style.borderRadius = "10px";
     document.body.appendChild(app.view);
-    playerData = playerData.playerData;
-    loadMyAvatar(app);
+   // playerData = playerData.playerData;
+    const {coins, username} = playerData.playerData;
+    const coinBalance = new PIXI.Text(`Coins: ${coins}`)
+    app.stage.addChild(coinBalance);
+    //loadMyAvatar(app, username);
     app.stage.interactive = true;
-
     gameCanvas.addEventListener('click', (e) => {
         movePlayer(getMousePosition(gameCanvas,e));
 
     })
 }
 
-const loadMyAvatar = (app) => {
+const loadMyAvatar = (app, username) => {
     avatar = new PIXI.Container();
     avatar.x = app.view.width/2
     avatar.y = app.view.height/2
@@ -96,16 +107,24 @@ const loadMyAvatar = (app) => {
     namePlate.endFill();
     namePlate.x = circle.x -10
     namePlate.y = circle.y +65
+    const style = new PIXI.TextStyle({
+        fontSize: 23
+    });
+    const avatarName = new PIXI.Text(username, style);
+    avatarName.y -=5
+    avatarName.x +=5
+    avatarName.fontSize = 5;
+    namePlate.addChild(avatarName);
     avatar.addChild(circle);
     avatar.addChild(namePlate);
     app.stage.addChild(avatar)
     return avatar;
-
-
 }
 
-const movePlayer = ({x,y}) => {
-    gsap.to(avatar, {duration:1, x:x, y:y})
+const movePlayer = ({x,y}) =>   {
+    //TODO: Make it target MY avatar
+    divinity.player.move({x:x,y:y});
+    gsap.to(avatar, {duration:1, x:x, y:y});
 }
 
 const getMousePosition = (canvas, event) => {

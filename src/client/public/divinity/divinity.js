@@ -5,7 +5,7 @@ import Player from './player.js';
 export default class Divinity {
     constructor(path) {
         this.game = new WebSocket(path);
-        this.eventHandler = new EventHandler(this);
+        this.eventHandler = new EventHandler(this,this.game);
         this.player = undefined;
     }
 

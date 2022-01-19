@@ -1,6 +1,11 @@
+import Commands from "./commands.js";
+
 export default class Player {
 
-    constructor(playerData) {
+    constructor(game, playerData) {
+        this.game = game;
+        this.x = undefined;
+        this.y = undefined;
        this.userId = playerData.userId;
        this.username = playerData.username;
        this.money = playerData.money;
@@ -13,4 +18,10 @@ export default class Player {
         document.dispatchEvent(loadingEvent);
     }
 
+    move({x,y}) {
+        this.x = x;
+        this.y = y;
+       // console.log(Commands.movePlayer(x, y))
+        this.game.send(Commands.movePlayer( x,y));
+    }
 }

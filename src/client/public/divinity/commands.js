@@ -9,4 +9,14 @@ export default class Commands {
             }
         })
     }
+
+    static movePlayer(x, y) {
+        return JSON.stringify({
+            cmd: "movePlayer",
+            data: {
+                "x": x,
+                "y":y
+            }
+        })
+    }
 }
