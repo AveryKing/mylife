@@ -22,9 +22,11 @@ export default class EventHandler {
         const data = JSON.parse(e.data)
         switch (data.cmd) {
             case Responses.LoginResponse:
+                console.log(e.data);
                 const loginEvent = new CustomEvent('loginResponse', {
                     detail: {
-                        success: data.data.success
+                        success: data.data.success,
+                        userId: data.data.userId
                     }
                 });
                 document.dispatchEvent(loginEvent);
