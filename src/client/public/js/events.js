@@ -5,8 +5,8 @@ export default class Events {
         Utils.get('login-form').onsubmit = (e) => {
             e.preventDefault();
             const userId = Utils.get('user-id').value;
-            myLife.myUserId = userId;
             const password = Utils.get('password').value;
+            myLife.myUserId = userId;
             myLife.divinity.doLogin(userId, password);
         }
 
@@ -21,8 +21,8 @@ export default class Events {
         document.addEventListener('roomLoaded', (e) => {
             e.detail.forEach(player => {
                 console.log(player);
-                let newObj = {};
-                let isMe = Number(player.userId) === Number(myLife.myUserId);
+                const newObj = {};
+                const isMe = Number(player.userId) === Number(myLife.myUserId);
                 if (!Object.keys(myLife.usersInRoom).includes(player.userId)) {
                     myLife.usersInRoom[Number(player.userId)] = player;
                 }
@@ -34,11 +34,22 @@ export default class Events {
         document.addEventListener('userJoined', (e) => {
             const isMe = Number(e.detail.userId) === Number(myLife.myUserId);
             if (!isMe) {
-                myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
+                let newObj = {};
+                newObj[e.detail.userId] = myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
+                myLife.userPositions.push(newObj);
+             //   myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
             }
             if (!Object.keys(myLife.usersInRoom).includes(e.detail.userId)) {
                 myLife.usersInRoom[Number(e.detail.userId)] = e.detail;
             }
+        })
+
+        document.addEventListener('userMoved', (e) => {
+            const coordinates = {
+                x: e.detail.x,
+                y: e.detail.y
+            }
+            myLife.moveMyPlayer(coordinates, false, e.detail.user)
         })
     }
 }
