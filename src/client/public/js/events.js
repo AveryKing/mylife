@@ -1,5 +1,15 @@
+import Utils from "./utils.js";
+
 export default class Events {
     constructor(myLife, login) {
+        Utils.get('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            const userId = Utils.get('user-id').value;
+            myLife.myUserId = userId;
+            const password = Utils.get('password').value;
+            myLife.divinity.doLogin(userId, password);
+        }
+
         document.addEventListener('loginResponse', (e) => {
             e.detail.success ? login.loginSuccess(e.detail.userId) : login.loginFail();
         });
@@ -23,7 +33,7 @@ export default class Events {
 
         document.addEventListener('userJoined', (e) => {
             const isMe = Number(e.detail.userId) === Number(myLife.myUserId);
-            if(!isMe) {
+            if (!isMe) {
                 myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
             }
             if (!Object.keys(myLife.usersInRoom).includes(e.detail.userId)) {

@@ -1,5 +1,8 @@
+import Login from './login.js';
+import Events from './events.js';
 export default class MyLife {
     constructor(divinity) {
+        this.eventHandler = new Events(this, new Login());
         this.divinity = divinity;
         this.myAvatar = undefined;
         this.app = undefined;

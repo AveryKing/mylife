@@ -5,10 +5,12 @@ export default class Login {
     constructor() {
         this.loginFailed = false;
     }
-     loginSuccess (myLife, userId)  {
+
+    loginSuccess() {
         get('login-div').style.display = 'none';
     }
-     loginFail() {
+
+    loginFail() {
         if (!this.loginFailed) {
             this.loginFailed = true;
             let p = document.createElement('p');
