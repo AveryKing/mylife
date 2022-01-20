@@ -22,7 +22,7 @@ export default class EventHandler {
         const data = JSON.parse(e.data)
         switch (data.cmd) {
             case Responses.LoginResponse:
-                console.log(e.data);
+              //  console.log(e.data);
                 const loginEvent = new CustomEvent('loginResponse', {
                     detail: {
                         success: data.data.success,
@@ -36,10 +36,18 @@ export default class EventHandler {
                 this.divinity.player = new Player(this.game, data.data);
                 break;
             case Responses.UserMovedResponse:
-                // console.log(data);
+                 console.log(data);
+                 const userMovedEvent = new CustomEvent('userMoved', {
+                     detail: data.data
+                 });
+                 document.dispatchEvent(userMovedEvent);
                 break;
             case Responses.UserJoinedResponse:
-                // console.log(data);
+                 const userJoinedEvent = new CustomEvent('userJoined', {
+                     detail: data.data
+                 });
+                 document.dispatchEvent(userJoinedEvent);
+              //  console.log(data);
                 break;
             case Responses.LoadRoomResponse:
                 const players = Object.keys(data.data)
