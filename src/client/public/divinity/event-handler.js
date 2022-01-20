@@ -60,11 +60,5 @@ export default class EventHandler {
         }
     }
 
-    loginFail() {
 
-    }
-
-    loginSuccess() {
-        window.alert('Login success');
-    }
 }
