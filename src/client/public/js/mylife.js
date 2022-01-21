@@ -12,6 +12,7 @@ export default class MyLife {
         this.stage = undefined;
         this.usersInRoom = {};
         this.userPositions = [];
+        this.chatMessages = [];
     }
 
     buildGameCanvas(playerData) {
@@ -28,11 +29,11 @@ export default class MyLife {
         const div = document.createElement('div');
         div.id = 'mainDiv';
         document.body.appendChild(div)
-        Utils.get('mainDiv').appendChild(app.view)
-
+        Utils.get('mainDiv').appendChild(app.view);
         let chatForm = document.createElement('form');
         chatForm.id = 'chat-form';
         let chatBox = document.createElement('input');
+        chatBox.autocomplete = 'off';
         chatBox.id = 'chat-text-box';
         chatBox.type = 'text';
         chatBox.style.position = 'absolute';
@@ -75,9 +76,7 @@ export default class MyLife {
 
     removeAvatarFromStage(userId) {
         this.app.stage.removeChild(this.getAvatarById(userId));
-        console.log(this.userPositions);
         this.userPositions = this.userPositions.filter(user => !user.hasOwnProperty(userId));
-        console.log(this.userPositions);
     }
 
     getMousePosition(canvas, event) {
@@ -130,15 +129,32 @@ export default class MyLife {
         gsap.to(isMe ? this.myAvatar : this.getAvatarById(userId), {duration: 1, x: x, y: y});
     }
 
-    drawChatBubble(fromUser, messageText) {
-        const chatBubble = new PIXI.Graphics();
-        chatBubble.beginFill(0x57B1FF);
-        chatBubble.drawRoundedRect(0, 0, 80, 20, 10);
+    drawChatBubble(avatar, messageText) {
+        if(messageText.length > 1) {
+            const chatBubbleContainer = new PIXI.Container();
+            const chatBubble = new PIXI.Graphics();
+            chatBubble.beginFill(0xEDEDED);
+            chatBubble.lineStyle(1, 0x000000, 0.6)
+            chatBubble.y = -40;
+            chatBubble.x = 10;
+            const style = new PIXI.TextStyle({fontSize: 15});
+            const text = new PIXI.Text(messageText, style);
+            chatBubble.drawRoundedRect(0, 0, text.width + 20, text.height + 10, 10);
+            text.y = chatBubble.y + 3;
+            text.x = chatBubble.x + 10;
+            chatBubbleContainer.addChild(chatBubble);
+            chatBubbleContainer.addChild(text);
+            avatar.addChild(chatBubbleContainer);
+            setTimeout(() => {
+                avatar.removeChild(chatBubbleContainer);
+            },5000)
+        }
+
+
     }
 
     chatMessageReceived(fromUser, messageText) {
-        console.log(`${fromUser} said ${messageText}`);
-        const player = this.userPositions.find(user => user.hasOwnProperty(fromUser));
+        const player = this.getAvatarById(fromUser);
         this.drawChatBubble(player, messageText)
     }
 

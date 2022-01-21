@@ -15,7 +15,6 @@ export default class Divinity {
 
     sendChat(fromUser, messageText) {
         this.game.send(Commands.sendChat(fromUser, messageText));
-        console.log(fromUser + ' ' + messageText)
     }
 
 

@@ -22,7 +22,6 @@ export default class Events {
 
         document.addEventListener('roomLoaded', (e) => {
             e.detail.forEach(player => {
-                console.log(player);
                 const newObj = {};
                 const isMe = Number(player.userId) === Number(myLife.myUserId);
                 if (!Object.keys(myLife.usersInRoom).includes(player.userId)) {
@@ -54,9 +53,7 @@ export default class Events {
         });
 
         document.addEventListener('userLeft', (e) => {
-            //console.log(e.detail.userId);
             myLife.removeAvatarFromStage(e.detail.userId);
-            // myLife.userPositions = myLife.userPositions.filter(user => user.userId !== e.detail.userId);
 
         });
 

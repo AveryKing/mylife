@@ -22,7 +22,6 @@ export default class EventHandler {
         const data = JSON.parse(e.data)
         switch (data.cmd) {
             case Responses.LoginResponse:
-              //  console.log(e.data);
                 const loginEvent = new CustomEvent('loginResponse', {
                     detail: {
                         success: data.data.success,
@@ -30,13 +29,11 @@ export default class EventHandler {
                     }
                 });
                 document.dispatchEvent(loginEvent);
-                //data.data.success ? this.loginSuccess() : this.loginFail();
                 break;
             case Responses.UserDataResponse:
                 this.divinity.player = new Player(this.game, data.data);
                 break;
             case Responses.UserMovedResponse:
-                 console.log(data);
                  const userMovedEvent = new CustomEvent('userMoved', {
                      detail: data.data
                  });
@@ -47,7 +44,6 @@ export default class EventHandler {
                      detail: data.data
                  });
                  document.dispatchEvent(userJoinedEvent);
-              //  console.log(data);
                 break;
             case Responses.LoadRoomResponse:
                 const players = Object.keys(data.data)
@@ -56,7 +52,6 @@ export default class EventHandler {
                 const roomLoadedEvent = new CustomEvent('roomLoaded', {
                     detail: players
                 });
-                console.table(players);
                 document.dispatchEvent(roomLoadedEvent);
                 break;
             case Responses.UserLeftResponse:
