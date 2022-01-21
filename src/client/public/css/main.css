@@ -3,10 +3,13 @@
     margin-top:30vh;
 }
 
-body {
-    text-align:center;
-}
 
 canvas {
     margin-top:5vh
+}
+
+#mainDiv {
+    /*margin-right: 50%;*/
+    position:relative;
+    left:20%;
 }

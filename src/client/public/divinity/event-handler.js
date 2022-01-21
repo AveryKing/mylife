@@ -56,7 +56,21 @@ export default class EventHandler {
                 const roomLoadedEvent = new CustomEvent('roomLoaded', {
                     detail: players
                 });
-                document.dispatchEvent(roomLoadedEvent)
+                console.table(players);
+                document.dispatchEvent(roomLoadedEvent);
+                break;
+            case Responses.UserLeftResponse:
+                const userLeftEvent = new CustomEvent('userLeft', {
+                    detail:data.data
+                });
+                document.dispatchEvent(userLeftEvent);
+                break;
+            case Responses.ChatMessageReceived:
+                const chatMsgReceived = new CustomEvent('chatMessageReceived', {
+                    detail: data.data
+                })
+                document.dispatchEvent(chatMsgReceived);
+                break;
         }
     }
 

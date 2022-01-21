@@ -13,6 +13,11 @@ export default class Divinity {
         this.game.send(Commands.login(userId, loginKey));
     }
 
+    sendChat(fromUser, messageText) {
+        this.game.send(Commands.sendChat(fromUser, messageText));
+        console.log(fromUser + ' ' + messageText)
+    }
+
 
 
 }

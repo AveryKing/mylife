@@ -2,6 +2,8 @@ import Utils from "./utils.js";
 
 export default class Events {
     constructor(myLife, login) {
+        this.myLife = myLife;
+
         Utils.get('login-form').onsubmit = (e) => {
             e.preventDefault();
             const userId = Utils.get('user-id').value;
@@ -37,7 +39,6 @@ export default class Events {
                 let newObj = {};
                 newObj[e.detail.userId] = myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
                 myLife.userPositions.push(newObj);
-             //   myLife.addAvatarToStage(e.detail, isMe, e.detail.coordinates);
             }
             if (!Object.keys(myLife.usersInRoom).includes(e.detail.userId)) {
                 myLife.usersInRoom[Number(e.detail.userId)] = e.detail;
@@ -50,7 +51,30 @@ export default class Events {
                 y: e.detail.y
             }
             myLife.moveMyPlayer(coordinates, false, e.detail.user)
+        });
+
+        document.addEventListener('userLeft', (e) => {
+            //console.log(e.detail.userId);
+            myLife.removeAvatarFromStage(e.detail.userId);
+            // myLife.userPositions = myLife.userPositions.filter(user => user.userId !== e.detail.userId);
+
+        });
+
+        document.addEventListener('chatMessageReceived', (e) => {
+            const fromUser = e.detail.fromUser;
+            const messageText = e.detail.text;
+            myLife.chatMessageReceived(fromUser, messageText);
         })
+    }
+
+    setupGameUIEvents() {
+        Utils.get('chat-form').onsubmit = (e) => {
+            e.preventDefault();
+            this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-text-box').value);
+            Utils.get('chat-text-box').value = ''
+
+
+        }
     }
 }
 

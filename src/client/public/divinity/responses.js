@@ -5,4 +5,6 @@ export default class Responses {
     static UserMovedResponse = 'userMoved';
     static UserJoinedResponse = 'userJoined';
     static LoadRoomResponse = 'loadRoom';
+    static UserLeftResponse = 'userLeft';
+    static ChatMessageReceived = 'chatMessageReceived';
 }

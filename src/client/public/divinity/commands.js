@@ -2,20 +2,30 @@ export default class Commands {
 
     static login(userId, loginKey) {
         return JSON.stringify({
-            cmd: "login",
-            data: {
+            "cmd": "login",
+            "data": {
                 "userId": userId,
-                "loginKey":loginKey
+                "loginKey": loginKey
             }
         })
     }
 
     static movePlayer(x, y) {
         return JSON.stringify({
-            cmd: "movePlayer",
-            data: {
+            "cmd": "movePlayer",
+            "data": {
                 "x": x,
-                "y":y
+                "y": y
+            }
+        })
+    }
+
+    static sendChat(fromUser, messageText) {
+        return JSON.stringify({
+            "cmd": "sendChatMessage",
+            "data": {
+                "fromUser": fromUser,
+                "text": messageText
             }
         })
     }
