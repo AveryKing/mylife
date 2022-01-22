@@ -68,7 +68,7 @@ export default class Events {
         Utils.get('chat-form').onsubmit = (e) => {
             e.preventDefault();
             this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-text-box').value);
-            Utils.get('chat-text-box').value = ''
+            Utils.get('chat-text-box').value = '';
 
 
         }

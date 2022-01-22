@@ -6,10 +6,10 @@ export default class Player {
         this.game = game;
         this.x = undefined;
         this.y = undefined;
-       this.userId = playerData.userId;
-       this.username = playerData.username;
-       this.money = playerData.money;
-       this.modLevel = playerData.modLevel;
+        this.userId = playerData.userId;
+        this.username = playerData.username;
+        this.money = playerData.money;
+        this.modLevel = playerData.modLevel;
         const loadingEvent = new CustomEvent('loadingComplete', {
             detail: {
                 playerData
@@ -18,10 +18,9 @@ export default class Player {
         document.dispatchEvent(loadingEvent);
     }
 
-    move({x,y}) {
+    move({x, y}) {
         this.x = x;
         this.y = y;
-       // console.log(Commands.movePlayer(x, y))
-        this.game.send(Commands.movePlayer( x,y));
+        this.game.send(Commands.movePlayer(x, y));
     }
 }

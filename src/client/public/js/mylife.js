@@ -1,6 +1,7 @@
 import Login from './login.js';
 import Events from './events.js';
 import Utils from './utils.js';
+
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -16,7 +17,6 @@ export default class MyLife {
     }
 
     buildGameCanvas(playerData) {
-
         const app = new PIXI.Application({
             width: 800,
             height: 600,
@@ -57,7 +57,7 @@ export default class MyLife {
         Utils.get('mainDiv').appendChild(chatForm);
         this.myLifeEvents.setupGameUIEvents();
         const {coins} = playerData.playerData;
-        const coinBalance = new PIXI.Text(`Coins: ${coins}`)
+        const coinBalance = new PIXI.Text(`Coins: ${coins}`);
         app.stage.addChild(coinBalance);
         app.stage.interactive = true;
         app.view.addEventListener('click', (e) => {
@@ -69,7 +69,7 @@ export default class MyLife {
 
 
     addAvatarToStage(player, isMe, coordinates) {
-        const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player,coordinates) : this.avatar = this.drawAvatar(player,coordinates);
+        const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
         return newAvatar;
     }
@@ -89,7 +89,7 @@ export default class MyLife {
     drawAvatarCircle() {
         const circle = new PIXI.Graphics();
         circle.beginFill(0x57B1FF);
-        circle.drawCircle(30, 30, 30)
+        circle.drawCircle(30, 30, 30);
         circle.endFill();
         return circle;
     }
@@ -101,16 +101,16 @@ export default class MyLife {
         namePlate.beginFill(0xC7C7C7);
         namePlate.drawRoundedRect(0, 0, 80, 20, 10);
         namePlate.endFill();
-        namePlate.x = circle.x - 10
-        namePlate.y = circle.y + 65
-        avatarName.y -= 5
-        avatarName.x += 5
+        namePlate.x = circle.x - 10;
+        namePlate.y = circle.y + 65;
+        avatarName.y -= 5;
+        avatarName.x += 5;
         avatarName.fontSize = 5;
         namePlate.addChild(avatarName);
         return namePlate;
     }
 
-    drawAvatar(player,coordinates) {
+    drawAvatar(player, coordinates) {
         const avatar = new PIXI.Container();
         const avatarCircle = avatar.addChild(this.drawAvatarCircle());
         avatar.addChild(this.drawAvatarNameplate(player.username, avatarCircle));
@@ -129,8 +129,9 @@ export default class MyLife {
         gsap.to(isMe ? this.myAvatar : this.getAvatarById(userId), {duration: 1, x: x, y: y});
     }
 
-    drawChatBubble(avatar, messageText) {
-        if(messageText.length > 1) {
+    drawChatBubble(avatar, fromUser, messageText) {
+
+        if (messageText.length > 1) {
             const chatBubbleContainer = new PIXI.Container();
             const chatBubble = new PIXI.Graphics();
             chatBubble.beginFill(0xEDEDED);
@@ -144,10 +145,33 @@ export default class MyLife {
             text.x = chatBubble.x + 10;
             chatBubbleContainer.addChild(chatBubble);
             chatBubbleContainer.addChild(text);
+            if (!this.chatMessages.some(x => x.hasOwnProperty(fromUser))) {
+                let userChatMessages = {};
+                let chatMsgArray = [];
+                chatMsgArray.push(chatBubbleContainer);
+                userChatMessages[fromUser] = chatMsgArray;
+                this.chatMessages.push(userChatMessages)
+            } else {
+                let userObj = this.chatMessages.find(x => x.hasOwnProperty(fromUser));
+                if (userObj[fromUser].length > 0) userObj[fromUser][userObj[fromUser].length - 1].y -= 30;
+                if (userObj[fromUser].length === 2) userObj[fromUser][0].y -= 30;
+                userObj[fromUser].push(chatBubbleContainer);
+                if (userObj[fromUser].length > 2) {
+                    userObj[fromUser].splice(0, 1);
+                    avatar.removeChild(userObj[fromUser][2]);
+                }
+                console.log(userObj[fromUser]);
+            }
+
             avatar.addChild(chatBubbleContainer);
             setTimeout(() => {
+                let userObj = this.chatMessages.find(x => x.hasOwnProperty(fromUser));
+                userObj[fromUser] = userObj[fromUser].filter(x => x !== chatBubbleContainer);
+
                 avatar.removeChild(chatBubbleContainer);
-            },5000)
+
+
+            }, 5000)
         }
 
 
@@ -155,7 +179,7 @@ export default class MyLife {
 
     chatMessageReceived(fromUser, messageText) {
         const player = this.getAvatarById(fromUser);
-        this.drawChatBubble(player, messageText)
+        this.drawChatBubble(player, fromUser, messageText);
     }
 
 }

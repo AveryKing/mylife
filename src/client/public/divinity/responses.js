@@ -7,4 +7,5 @@ export default class Responses {
     static LoadRoomResponse = 'loadRoom';
     static UserLeftResponse = 'userLeft';
     static ChatMessageReceived = 'chatMessageReceived';
+    static InventoryItemRemoved = 'inventoryItemRemoved';
 }

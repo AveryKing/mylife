@@ -34,16 +34,16 @@ export default class EventHandler {
                 this.divinity.player = new Player(this.game, data.data);
                 break;
             case Responses.UserMovedResponse:
-                 const userMovedEvent = new CustomEvent('userMoved', {
-                     detail: data.data
-                 });
-                 document.dispatchEvent(userMovedEvent);
+                const userMovedEvent = new CustomEvent('userMoved', {
+                    detail: data.data
+                });
+                document.dispatchEvent(userMovedEvent);
                 break;
             case Responses.UserJoinedResponse:
-                 const userJoinedEvent = new CustomEvent('userJoined', {
-                     detail: data.data
-                 });
-                 document.dispatchEvent(userJoinedEvent);
+                const userJoinedEvent = new CustomEvent('userJoined', {
+                    detail: data.data
+                });
+                document.dispatchEvent(userJoinedEvent);
                 break;
             case Responses.LoadRoomResponse:
                 const players = Object.keys(data.data)
@@ -56,7 +56,7 @@ export default class EventHandler {
                 break;
             case Responses.UserLeftResponse:
                 const userLeftEvent = new CustomEvent('userLeft', {
-                    detail:data.data
+                    detail: data.data
                 });
                 document.dispatchEvent(userLeftEvent);
                 break;
@@ -66,6 +66,11 @@ export default class EventHandler {
                 })
                 document.dispatchEvent(chatMsgReceived);
                 break;
+            case Responses.InventoryItemRemoved:
+                const itemRemovedEvent = new CustomEvent('inventoryItemRemoved', {
+                    detail: data.data
+                })
+
         }
     }
 
