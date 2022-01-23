@@ -1,5 +1,5 @@
 export default class PlayerContextMenu {
-    constructor(app,x, y) {
+       constructor(myLife,player,x, y) {
         let buttonArray = [
             {
                 id: 1,
@@ -26,19 +26,19 @@ export default class PlayerContextMenu {
         let menuContainer = new PIXI.Container();
         menuContainer.interactive = true;
         menuContainer.x = x;
-        menuContainer.y = y;
+        menuContainer.y = y - 50;
         const menu = new PIXI.Graphics();
         menu.beginFill(0xFFFFFF);
         menu.lineStyle(2, 0x000000, 1);
         menu.drawRoundedRect(5, 5, 150, 150, 10)
         menu.endFill();
         const style = new PIXI.TextStyle({fontSize: 16});
-        const name = new PIXI.Text('Avery', style);
+        const name = new PIXI.Text(player.username, style);
         name.x = menu.width / 2.5;
-        name.y = menu.height / 20
+        name.y = menu.height / 20;
         menu.addChild(name);
         menuContainer.addChild(menu);
-        app.stage.addChild(menuContainer);
+        myLife.app.stage.addChild(menuContainer);
         for (let i = 0; i < buttonArray.length; i++) {
             let buttonContainer = new PIXI.Container();
             let line = new PIXI.Graphics();
@@ -48,7 +48,7 @@ export default class PlayerContextMenu {
             line2.position.set(-3, 55);
             line2.lineStyle(1, 0x000000).moveTo(156, 0).lineTo(10, 0);
             let buttonText = new PIXI.Text(buttonArray[i].text, {fontSize: 15});
-            let buttonBackground = new PIXI.Graphics;
+            let buttonBackground = new PIXI.Graphics();
             buttonBackground.beginFill(0xFFFFFF, 0.3);
             buttonBackground.drawRect(6, 30, line.width + 2, line2.y - line.y);
             buttonBackground.endFill();
@@ -66,18 +66,22 @@ export default class PlayerContextMenu {
                 buttonBackground.beginFill(0x0088FF, 0.3);
                 buttonBackground.drawRect(6, 30, line.width + 2, line2.y - line.y);
                 buttonBackground.endFill();
-            }
+            };
             buttonContainer.mouseout = (e) => {
                 buttonBackground.clear();
                 buttonBackground.beginFill(0xFFFFFF, 0.3);
                 buttonBackground.drawRect(6, 30, line.width + 2, line2.y - line.y);
                 buttonBackground.endFill();
-            }
+            };
             buttonContainer.y += i * 25;
             menu.addChild(buttonContainer);
-            menuContainer.mouseout = (e) => {
-                app.stage.removeChild(menuContainer);
+            menuContainer.mouseover = (e) => {
+                myLife.playerContextMenuOpen = true;
             }
+            menuContainer.mouseout = (e) => {
+                myLife.playerContextMenuOpen = false;
+                myLife.app.stage.removeChild(menuContainer);
+            };
         }
 
     }

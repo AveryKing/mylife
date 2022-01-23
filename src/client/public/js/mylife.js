@@ -2,6 +2,7 @@ import Login from './login.js';
 import Events from './events.js';
 import Utils from './utils.js';
 import PlayerContextMenu from "./player-context-menu.js";
+
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -15,6 +16,7 @@ export default class MyLife {
         this.userPositions = [];
         this.chatMessages = [];
         this.mouseOverAvatar = false;
+        this.playerContextMenuOpen = false;
     }
 
     buildGameCanvas(playerData) {
@@ -63,15 +65,18 @@ export default class MyLife {
         app.stage.addChild(coinBalance);
         app.stage.interactive = true;
         app.view.addEventListener('click', (e) => {
-                if(!this.mouseOverAvatar) this.moveMyPlayer(this.getMousePosition(app.view, e), true);
+            if (!this.mouseOverAvatar && !this.playerContextMenuOpen) {
+                this.moveMyPlayer(this.getMousePosition(app.view, e), true);
+            }
 
         })
         return app;
     }
 
-     toggleStageInteractive() {
+    toggleStageInteractive() {
         this.app.stage.interactive = !this.app.stage.interactive;
     }
+
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
@@ -110,7 +115,7 @@ export default class MyLife {
             const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
             const x = avatar.x;
             const y = avatar.y;
-            new PlayerContextMenu(this.app,x,y);
+            new PlayerContextMenu(this, player, x, y);
         }
         circle.mouseout = (mouseData) => {
             this.mouseOverAvatar = false;
