@@ -1,7 +1,7 @@
 import Login from './login.js';
 import Events from './events.js';
 import Utils from './utils.js';
-
+import PlayerContextMenu from "./player-context-menu.js";
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -14,6 +14,7 @@ export default class MyLife {
         this.usersInRoom = {};
         this.userPositions = [];
         this.chatMessages = [];
+        this.mouseOverAvatar = false;
     }
 
     buildGameCanvas(playerData) {
@@ -58,16 +59,19 @@ export default class MyLife {
         this.myLifeEvents.setupGameUIEvents();
         const {coins} = playerData.playerData;
         const coinBalance = new PIXI.Text(`Coins: ${coins}`);
+        this.stage = app.stage;
         app.stage.addChild(coinBalance);
         app.stage.interactive = true;
         app.view.addEventListener('click', (e) => {
-            this.moveMyPlayer(this.getMousePosition(app.view, e), true);
+                if(!this.mouseOverAvatar) this.moveMyPlayer(this.getMousePosition(app.view, e), true);
 
         })
         return app;
     }
 
-
+     toggleStageInteractive() {
+        this.app.stage.interactive = !this.app.stage.interactive;
+    }
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
@@ -90,7 +94,28 @@ export default class MyLife {
         const circle = new PIXI.Graphics();
         circle.beginFill(0x57B1FF);
         circle.drawCircle(30, 30, 30);
-        circle.endFill();
+        circle.endFill()
+        circle.interactive = true;
+        circle.hitArea = new PIXI.Circle(30, 30, 30);
+        circle.mouseover = (e) => {
+            this.mouseOverAvatar = true;
+            circle.cursor = "url('point-cursor.cur'),auto";
+            circle.clear();
+            circle.beginFill(0x57B1FF);
+            circle.lineStyle(5, 0xC1D500, 0.6);
+            circle.drawCircle(30, 30, 30);
+            circle.endFill()
+        }
+        circle.click = (e) => {
+            new PlayerContextMenu(this.app,e);
+        }
+        circle.mouseout = (mouseData) => {
+            this.mouseOverAvatar = false;
+            circle.clear();
+            circle.beginFill(0x57B1FF);
+            circle.drawCircle(30, 30, 30);
+            circle.endFill()
+        }
         return circle;
     }
 
@@ -117,6 +142,12 @@ export default class MyLife {
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y;
         return avatar;
+    }
+
+    drawPlayerContextMenu(player) {
+        const menu = document.createElement('div');
+
+
     }
 
     getAvatarById(userId) {
@@ -162,15 +193,11 @@ export default class MyLife {
                 }
                 console.log(userObj[fromUser]);
             }
-
             avatar.addChild(chatBubbleContainer);
             setTimeout(() => {
                 let userObj = this.chatMessages.find(x => x.hasOwnProperty(fromUser));
                 userObj[fromUser] = userObj[fromUser].filter(x => x !== chatBubbleContainer);
-
                 avatar.removeChild(chatBubbleContainer);
-
-
             }, 5000)
         }
 
