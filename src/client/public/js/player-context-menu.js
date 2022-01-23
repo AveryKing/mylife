@@ -1,5 +1,5 @@
 export default class PlayerContextMenu {
-    constructor(app, player) {
+    constructor(app,x, y) {
         let buttonArray = [
             {
                 id: 1,
@@ -24,6 +24,9 @@ export default class PlayerContextMenu {
         ];
 
         let menuContainer = new PIXI.Container();
+        menuContainer.interactive = true;
+        menuContainer.x = x;
+        menuContainer.y = y;
         const menu = new PIXI.Graphics();
         menu.beginFill(0xFFFFFF);
         menu.lineStyle(2, 0x000000, 1);
@@ -72,6 +75,9 @@ export default class PlayerContextMenu {
             }
             buttonContainer.y += i * 25;
             menu.addChild(buttonContainer);
+            menuContainer.mouseout = (e) => {
+                app.stage.removeChild(menuContainer);
+            }
         }
 
     }

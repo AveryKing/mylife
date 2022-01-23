@@ -90,7 +90,7 @@ export default class MyLife {
         return {x: x, y: y};
     }
 
-    drawAvatarCircle() {
+    drawAvatarCircle(player) {
         const circle = new PIXI.Graphics();
         circle.beginFill(0x57B1FF);
         circle.drawCircle(30, 30, 30);
@@ -107,7 +107,10 @@ export default class MyLife {
             circle.endFill()
         }
         circle.click = (e) => {
-            new PlayerContextMenu(this.app,e);
+            const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
+            const x = avatar.x;
+            const y = avatar.y;
+            new PlayerContextMenu(this.app,x,y);
         }
         circle.mouseout = (mouseData) => {
             this.mouseOverAvatar = false;
@@ -137,7 +140,7 @@ export default class MyLife {
 
     drawAvatar(player, coordinates) {
         const avatar = new PIXI.Container();
-        const avatarCircle = avatar.addChild(this.drawAvatarCircle());
+        const avatarCircle = avatar.addChild(this.drawAvatarCircle(player));
         avatar.addChild(this.drawAvatarNameplate(player.username, avatarCircle));
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y;
