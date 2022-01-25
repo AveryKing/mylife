@@ -29,4 +29,10 @@ export default class Commands {
             }
         })
     }
+
+    static getBuddyList() {
+        return JSON.stringify({
+            "cmd":"getBuddyList"
+        })
+    }
 }

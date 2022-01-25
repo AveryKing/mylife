@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
     "start": "nodemon src/client/web-server.js"
   },
   "author": "",
@@ -14,6 +16,11 @@
     "gsap": "^3.9.1",
     "jquery": "^3.6.0",
     "open": "^8.4.0",
+    "pixi-scrollbox": "^2.3.1",
     "pixi.js": "^6.2.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
   }
 }

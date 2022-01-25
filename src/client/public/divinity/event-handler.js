@@ -70,6 +70,13 @@ export default class EventHandler {
                 const itemRemovedEvent = new CustomEvent('inventoryItemRemoved', {
                     detail: data.data
                 })
+                break;
+            case Responses.LoadBuddyListResponse:
+                const loadBuddyList = new CustomEvent('loadBuddyList', {
+                    detail: data.data
+                })
+            document.dispatchEvent(loadBuddyList);
+                break;
 
         }
     }

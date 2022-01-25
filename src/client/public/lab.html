@@ -1,0 +1,73 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+<style>
+    #buddy-list {
+        font-family:Ubuntu;
+    }
+    #buddy-list-header {
+        background-color: #0065BC;
+        position:absolute;
+        width: 300px;
+        color: #FFF;
+        height: 40px;
+        font-size: 25px;
+        border-top-left-radius:10px;
+        border-top-right-radius:10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    #header-text {
+        position:absolute;
+        left:25px;
+        top:5px;
+
+
+    }
+    #panel-body {
+        background-color: #d3d2d2;
+        height:420px;
+        width: 300px;
+        border-radius:10px;
+
+    }
+    h3 {
+        position:absolute;
+        top:30px;
+        left:25px;
+    }
+
+    #name-search {
+        border-radius: 7px;
+        position:absolute;
+        top:50px;
+        left:100px;
+    }
+    #name-search-div {
+        position:absolute;
+        display:inline-flex;
+    }
+    #buddies-panel {
+        margin: 10px;
+        position:relative;
+        top:80px;
+        background-color:#FFFFFF;
+        height:320px;
+        border-radius:5px;
+    }
+</style>
+
+<div id="buddy-list">
+    <div id="buddy-list-header">
+        <span id="header-text">Buddy List (0/10)</span>
+    </div>
+    <div id="panel-body">
+        <div id="name-search-div">
+            <h3 id="username">Avery</h3>
+            <input id="name-search" placeholder="Search buddies ..." type="text" />
+        </div>
+    <div id="buddies-panel">
+
+    </div>
+    </div>
+</div>

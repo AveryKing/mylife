@@ -18,6 +18,7 @@ export default class Events {
 
         document.addEventListener('loadingComplete', (e) => {
             myLife.app = myLife.buildGameCanvas(e.detail, myLife.divinity, myLife.myAvatar);
+            myLife.divinity.getBuddyList();
         })
 
         document.addEventListener('roomLoaded', (e) => {
@@ -32,6 +33,9 @@ export default class Events {
             })
         })
 
+        document.addEventListener('loadBuddyList', (e) => {
+            console.log(e.detail);
+        })
         document.addEventListener('userJoined', (e) => {
             const isMe = Number(e.detail.userId) === Number(myLife.myUserId);
             if (!isMe) {

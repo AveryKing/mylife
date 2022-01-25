@@ -8,4 +8,5 @@ export default class Responses {
     static UserLeftResponse = 'userLeft';
     static ChatMessageReceived = 'chatMessageReceived';
     static InventoryItemRemoved = 'inventoryItemRemoved';
+    static LoadBuddyListResponse = 'loadBuddyList';
 }
