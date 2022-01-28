@@ -1,9 +1,10 @@
 import Utils from "./utils.js";
+import BuddyList from "./buddy-list.js";
 
 export default class Events {
     constructor(myLife, login) {
         this.myLife = myLife;
-
+        this.buddiesLoaded = false;
         Utils.get('login-form').onsubmit = (e) => {
             e.preventDefault();
             const userId = Utils.get('user-id').value;
@@ -34,7 +35,10 @@ export default class Events {
         })
 
         document.addEventListener('loadBuddyList', (e) => {
-            console.log(e.detail);
+            if(!this.buddiesLoaded) {
+                this.buddiesLoaded = true;
+                new BuddyList(e.detail);
+            }
         })
         document.addEventListener('userJoined', (e) => {
             const isMe = Number(e.detail.userId) === Number(myLife.myUserId);

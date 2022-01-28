@@ -1,33 +1,64 @@
+import Utils from "./utils.js";
 
-import * as Scroll from "./scrollbox.js";
+export default class BuddyList {
+    constructor(buddies) {
+        console.table(buddies)
+        const mainDiv = document.createElement('div');
+        ///mainDiv.style.display = "none";
+        mainDiv.classList.add('buddy-list');
+        const header = document.createElement('div');
+        header.classList.add('buddy-list-header');
+        mainDiv.appendChild(header);
+        const headerText = document.createElement('span');
+        headerText.classList.add('header-text');
+        headerText.innerText = "Buddy List (0/10)";
+        header.appendChild(headerText);
+        const panelBody = document.createElement('div');
+        panelBody.classList.add('panel-body');
+        const nameSearch = document.createElement('div');
+        nameSearch.classList.add('name-search-div');
+        panelBody.appendChild(nameSearch);
+        const yourName = document.createElement('h3');
+        yourName.innerText = "Avery";
+        nameSearch.appendChild(yourName);
+        const nameSearchInput = document.createElement('input');
+        nameSearchInput.classList.add('name-search');
+        nameSearch.appendChild(nameSearchInput);
+        mainDiv.appendChild(panelBody);
+        const buddiesPanel= document.createElement('div');
+        buddiesPanel.classList.add('buddies-panel');
+        panelBody.appendChild(buddiesPanel);
+        Utils.get('mainDiv').appendChild(mainDiv);
 
-window.onload = function () {
-    let app = new PIXI.Application({
-        backgroundAlpha: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        resolution: window.devicePixelRatio,
-        antialias: true,
-    });
-    document.body.appendChild(app.view);
-    app.view.style.position = 'fixed';
-    app.view.style.width = 'calc(100vw - 50px)';
-    app.view.style.height = '100vh';
-    app.view.style.left = '50px';
-    app.view.style.top = 0;
+        // Buddies ///////////
+        Object.values(buddies).forEach(buddy => {
+            const buddyDiv = document.createElement('div');
+            buddyDiv.classList.add('buddy-div');
+            buddiesPanel.appendChild(buddyDiv);
+            const buddyName = document.createElement('span');
+            buddyName.classList.add('buddy-name');
+            buddyName.innerText = buddy.username;
+            buddyDiv.appendChild(buddyName);
+            const buddyLocation = document.createElement('span');
+            buddyLocation.classList.add('buddy-location');
+            buddyLocation.innerText = 'Lobby';
+            buddyDiv.appendChild(buddyLocation);
+            const buddyStatus = document.createElement('div');
+           buddy.status
+               ? buddyStatus.classList.add('buddy-status-offline')
+               : buddyStatus.classList.add('buddy-status-online');
 
-    const viewport = app.stage.addChild(new Viewport({
-        screenWidth: window.innerWidth,
-        screenHeight: window.innerHeight,
-        interaction: app.renderer.plugins.interaction,
-    }));
+            buddyDiv.appendChild(buddyStatus);
+        })
 
-    viewport.drag().pinch().decelerate();
-    vertical();
-    window.addEventListener('resize', resize);
 
-    Ticker.shared.add(() => {
-        _fps.frame();
-    });
-    highlight();
-};
+
+        ////////////////////
+        $( ".buddy-list" ).draggable();
+
+
+
+
+
+    }
+}

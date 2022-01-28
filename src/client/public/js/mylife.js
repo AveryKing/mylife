@@ -2,6 +2,7 @@ import Login from './login.js';
 import Events from './events.js';
 import Utils from './utils.js';
 import PlayerContextMenu from "./player-context-menu.js";
+import BuddyList from './buddy-list.js';
 
 export default class MyLife {
     constructor(divinity) {
@@ -70,6 +71,16 @@ export default class MyLife {
             }
 
         })
+
+        const viewBuddies = new PIXI.Graphics();
+        viewBuddies.beginFill(0xC7C7C7);
+        viewBuddies.drawRoundedRect(0, 0, 80, 20, 10);
+        viewBuddies.endFill();
+        viewBuddies.x = 500;
+        const style = new PIXI.TextStyle({fontSize: 23});
+        const viewBuddiesText = new PIXI.Text("View Buddies", style);
+        viewBuddies.addChild(viewBuddiesText);
+        app.stage.addChild(viewBuddies);
         return app;
     }
 

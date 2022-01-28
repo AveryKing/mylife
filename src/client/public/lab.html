@@ -1,6 +1,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
 <style>
     #buddy-list {
         font-family:Ubuntu;
@@ -8,7 +9,7 @@
     #buddy-list-header {
         background-color: #0065BC;
         position:absolute;
-        width: 300px;
+        width: 240px;
         color: #FFF;
         height: 40px;
         font-size: 25px;
@@ -27,33 +28,99 @@
     #panel-body {
         background-color: #d3d2d2;
         height:420px;
-        width: 300px;
+        width: 240px;
         border-radius:10px;
 
     }
     h3 {
         position:absolute;
-        top:30px;
-        left:25px;
+        top:23px;
+        left:12px;
     }
 
     #name-search {
         border-radius: 7px;
         position:absolute;
         top:50px;
-        left:100px;
+        width:150px;
+        left:80px;
     }
     #name-search-div {
         position:absolute;
         display:inline-flex;
     }
     #buddies-panel {
+        display:block;
         margin: 10px;
         position:relative;
         top:80px;
         background-color:#FFFFFF;
         height:320px;
         border-radius:5px;
+        overflow-y:scroll;
+    }
+
+
+
+    .buddy-div {
+        position:relative;
+        top:10px;
+        width:100%;
+        background-color: #FFFFFF;
+        height:45px;
+
+    }
+    .buddy-div:hover {
+        background-color: #eeeeee;
+
+    }
+    .buddy-name {
+        font-size:15px;
+        position:absolute;
+        left:20px;
+        top:0px;
+    }
+
+    .buddy-location {
+        position:absolute;
+        left:45px;
+        top:20px;
+        font-size:13px;
+        color:gray;
+    }
+
+    .buddy-status-online {
+        position:absolute;
+        top:20px;
+        left:25px;
+        background-color:#00cb10;
+        width:11.5px;
+        height:11.5px;
+        border-radius:100%;
+        border:2px solid #228540
+    }
+    .buddy-status-offline {
+        position:absolute;
+        top:20px;
+        left:25px;
+        background-color:#dadada;
+        width:11.5px;
+        height:11.5px;
+        border-radius:100%;
+        border:2px solid #8a8f96
+    }
+    svg {
+        position:absolute;
+        width:16px;
+        height:16px;
+        right:10px;
+        top:10px;
+    }
+
+    svg:hover {
+        width:20px;
+        stroke-width:20px;
+        height:20px;
     }
 </style>
 
@@ -67,6 +134,42 @@
             <input id="name-search" placeholder="Search buddies ..." type="text" />
         </div>
     <div id="buddies-panel">
+        <div class="buddy-div">
+            <span class="buddy-name">
+                Avery
+            </span>
+            <span class="buddy-location">
+                Lobby
+            </span>
+
+            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+            </svg>
+
+            <div class="buddy-status-online">
+
+            </div>
+
+        </div>
+        <div class="buddy-div">
+            <span class="buddy-name">
+                User
+            </span>
+            <span class="buddy-location">
+                Offline
+            </span>
+
+            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+            </svg>
+
+            <div class="buddy-status-offline">
+
+            </div>
+
+        </div>
 
     </div>
     </div>
