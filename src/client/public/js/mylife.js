@@ -9,6 +9,7 @@ export default class MyLife {
         this.myLifeEvents = new Events(this, new Login());
         this.divinity = divinity;
         this.myAvatar = undefined;
+        this.currentlyWalking = false;
         this.app = undefined;
         this.myUserId = undefined;
         this.avatar = undefined;
@@ -73,6 +74,14 @@ export default class MyLife {
 
         })
 
+        app.view.addEventListener('mousemove', (e) => {
+            if(this.getMousePosition(app.view, e).x > this.myAvatar.x) {
+                this.myAvatar.faceRight();
+            } else {
+                this.myAvatar.faceLeft();
+            }
+        })
+
         const viewBuddies = new PIXI.Graphics();
         viewBuddies.beginFill(0xC7C7C7);
         viewBuddies.drawRoundedRect(0, 0, 80, 20, 10);
@@ -82,9 +91,6 @@ export default class MyLife {
         const viewBuddiesText = new PIXI.Text("View Buddies", style);
         viewBuddies.addChild(viewBuddiesText);
         app.stage.addChild(viewBuddies);
-
-
-
 
 
         return app;
@@ -97,9 +103,7 @@ export default class MyLife {
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
-        newAvatar.stopWalking = function test(newAvatar){
-           alert(1)
-        }
+
         return newAvatar;
     }
 
@@ -164,22 +168,21 @@ export default class MyLife {
     }
 
     drawAvatar(player, coordinates) {
-        let alienImages = ["assets/sprite walk-0.png","assets/sprite walk-1.png","assets/sprite walk-2.png","assets/sprite walk-3.png","assets/sprite walk-4.png","assets/sprite walk-5.png","assets/sprite walk-6.png","assets/sprite walk-7.png"];
+        let alienImages = ["assets/sprite walk-0.png", "assets/sprite walk-1.png", "assets/sprite walk-2.png", "assets/sprite walk-3.png", "assets/sprite walk-4.png", "assets/sprite walk-5.png", "assets/sprite walk-6.png", "assets/sprite walk-7.png"];
 
         let textureArray = [];
 
-        for (let i=0; i < alienImages.length; i++)
-        {
+        for (let i = 0; i < alienImages.length; i++) {
             let texture = PIXI.Texture.from(alienImages[i]);
             textureArray.push(texture);
         }
 
         let animatedSprite = new PIXI.AnimatedSprite(textureArray);
-      //  app.stage.addChild(animatedSprite);
-        animatedSprite.scale.set(0.175,0.175);
+        //  app.stage.addChild(animatedSprite);
+        animatedSprite.scale.set(0.175, 0.175);
         animatedSprite.animationSpeed = 0.2;
 
-      //  animatedSprite.play();
+        //  animatedSprite.play();
 
 
         const avatar = new PIXI.Container();
@@ -188,13 +191,32 @@ export default class MyLife {
         avatar.addChild(this.drawAvatarNameplate(player.username, animatedSprite));
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y;
+        avatar.faceRight = () => {
+            if(!this.currentlyWalking) {
+                avatar.children[0].anchor.set(0.5, 0.5);
+                avatar.children[0].scale.x = .175;
+            }
+
+        }
+        avatar.faceLeft = () => {
+            if(!this.currentlyWalking) {
+                avatar.children[0].anchor.set(0.5, 0.5);
+
+                avatar.children[0].scale.x = -.175;
+            }
+
+        }
         avatar.doWalk = () => {
-            avatar.children[0].gotoAndStop(0);
-            avatar.children[0].play();
+            if (!this.currentlyWalking) {
+                this.currentlyWalking = true;
+                avatar.children[0].gotoAndStop(0);
+                avatar.children[0].play();
+            }
+
         }
         avatar.stopWalk = () => {
-
             avatar.children[0].gotoAndStop(0);
+            this.currentlyWalking = false;
         }
         //avatar.children[0].play();
         return avatar;
@@ -212,10 +234,11 @@ export default class MyLife {
     }
 
     moveMyPlayer({x, y}, isMe, userId) {
+        let movedAvatar = isMe ? this.myAvatar: this.getAvatarById(userId);
+        x > movedAvatar.x ? movedAvatar.faceRight() : movedAvatar.faceLeft();
         isMe && this.divinity.player.move({x: x, y: y});
-        isMe ? this.myAvatar.doWalk() : this.getAvatarById(userId).doWalk();
-        gsap.to(isMe ? this.myAvatar : this.getAvatarById(userId), {duration: 3, x: x, y: y,
-            onComplete: isMe ? this.myAvatar.stopWalk : this.getAvatarById(userId).stopWalk})
+        movedAvatar.doWalk();
+        gsap.to(movedAvatar, {duration: 3, x: x, y: y, onComplete: movedAvatar.stopWalk})
     }
 
 
