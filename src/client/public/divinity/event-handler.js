@@ -20,7 +20,16 @@ export default class EventHandler {
 
     onMessage(e) {
         const data = JSON.parse(e.data)
+        console.log(data);
         switch (data.cmd) {
+
+            case Responses.LoadBuddyListResponse:
+                const loadBuddyList = new CustomEvent('loadBuddyList', {
+                    detail: data.data
+                })
+                document.dispatchEvent(loadBuddyList);
+                break;
+
             case Responses.LoginResponse:
                 const loginEvent = new CustomEvent('loginResponse', {
                     detail: {
@@ -70,12 +79,6 @@ export default class EventHandler {
                 const itemRemovedEvent = new CustomEvent('inventoryItemRemoved', {
                     detail: data.data
                 })
-                break;
-            case Responses.LoadBuddyListResponse:
-                const loadBuddyList = new CustomEvent('loadBuddyList', {
-                    detail: data.data
-                })
-            document.dispatchEvent(loadBuddyList);
                 break;
 
         }
