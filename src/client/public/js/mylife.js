@@ -9,7 +9,7 @@ export default class MyLife {
         this.myLifeEvents = new Events(this, new Login());
         this.divinity = divinity;
         this.myAvatar = undefined;
-        this.currentlyWalking = false;
+        this.avatarSprite = undefined;
         this.app = undefined;
         this.myUserId = undefined;
         this.avatar = undefined;
@@ -21,12 +21,33 @@ export default class MyLife {
         this.playerContextMenuOpen = false;
     }
 
+    setup() {
+        return PIXI.Loader.shared.resources["assets/spritesheet.json"]
+
+    }
     buildGameCanvas(playerData) {
         const app = new PIXI.Application({
             width: 800,
             height: 600,
+
             backgroundColor: 0xFFFFFF,
         });
+        let loader = PIXI.Loader.shared;
+        loader.onComplete.add(() => {
+
+            let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet
+            console.log(sheet)
+           let avatar = new PIXI.AnimatedSprite(sheet.animations["walk"]);
+            avatar.scale.set(0.225)
+            avatar.animationSpeed = 0.4;
+            this.avatarSprite = avatar;
+         //   avatar.play();
+            //app.stage.addChild(avatar);
+        })
+        loader
+            .add("assets/spritesheet.json")
+            .load(this.setup);
+
         app.view.style.border = "2px solid black";
         app.view.style.position = 'absolute';
         app.view.style.zIndex = -1;
@@ -74,14 +95,6 @@ export default class MyLife {
 
         })
 
-        app.view.addEventListener('mousemove', (e) => {
-            if(this.getMousePosition(app.view, e).x > this.myAvatar.x) {
-                this.myAvatar.faceRight();
-            } else {
-                this.myAvatar.faceLeft();
-            }
-        })
-
         const viewBuddies = new PIXI.Graphics();
         viewBuddies.beginFill(0xC7C7C7);
         viewBuddies.drawRoundedRect(0, 0, 80, 20, 10);
@@ -91,6 +104,11 @@ export default class MyLife {
         const viewBuddiesText = new PIXI.Text("View Buddies", style);
         viewBuddies.addChild(viewBuddiesText);
         app.stage.addChild(viewBuddies);
+
+
+
+
+
 
 
         return app;
@@ -103,7 +121,9 @@ export default class MyLife {
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
-
+        newAvatar.stopWalking = function test(newAvatar){
+           alert(1)
+        }
         return newAvatar;
     }
 
@@ -156,10 +176,10 @@ export default class MyLife {
         const style = new PIXI.TextStyle({fontSize: 23});
         const avatarName = new PIXI.Text(username, style);
         namePlate.beginFill(0xC7C7C7);
-        namePlate.drawRoundedRect(0, 0, 80, 20, 10);
+        namePlate.drawRoundedRect(0, 0, 80, 20, 10,20,20);
         namePlate.endFill();
         namePlate.x = circle.x - 10;
-        namePlate.y = circle.y + 65;
+        namePlate.y = circle.y + 140;
         avatarName.y -= 5;
         avatarName.x += 5;
         avatarName.fontSize = 5;
@@ -168,55 +188,24 @@ export default class MyLife {
     }
 
     drawAvatar(player, coordinates) {
-        let alienImages = ["assets/sprite walk-0.png", "assets/sprite walk-1.png", "assets/sprite walk-2.png", "assets/sprite walk-3.png", "assets/sprite walk-4.png", "assets/sprite walk-5.png", "assets/sprite walk-6.png", "assets/sprite walk-7.png"];
-
-        let textureArray = [];
-
-        for (let i = 0; i < alienImages.length; i++) {
-            let texture = PIXI.Texture.from(alienImages[i]);
-            textureArray.push(texture);
-        }
-
-        let animatedSprite = new PIXI.AnimatedSprite(textureArray);
-        //  app.stage.addChild(animatedSprite);
-        animatedSprite.scale.set(0.175, 0.175);
-        animatedSprite.animationSpeed = 0.2;
-
-        //  animatedSprite.play();
-
-
+        let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet
+        console.log(sheet)
+        let animatedSprite = new PIXI.AnimatedSprite(sheet.animations["walk"]);
+        animatedSprite.scale.set(0.225)
+        animatedSprite.animationSpeed = 0.4;
         const avatar = new PIXI.Container();
         avatar.addChild(animatedSprite);
-
         avatar.addChild(this.drawAvatarNameplate(player.username, animatedSprite));
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y;
-        avatar.faceRight = () => {
-            if(!this.currentlyWalking) {
-                avatar.children[0].anchor.set(0.5, 0.5);
-                avatar.children[0].scale.x = .175;
-            }
-
-        }
-        avatar.faceLeft = () => {
-            if(!this.currentlyWalking) {
-                avatar.children[0].anchor.set(0.5, 0.5);
-
-                avatar.children[0].scale.x = -.175;
-            }
-
-        }
         avatar.doWalk = () => {
-            if (!this.currentlyWalking) {
-                this.currentlyWalking = true;
-                avatar.children[0].gotoAndStop(0);
-                avatar.children[0].play();
-            }
-
+            avatar.children[0].play();
         }
         avatar.stopWalk = () => {
-            avatar.children[0].gotoAndStop(0);
-            this.currentlyWalking = false;
+
+                avatar.children[0].gotoAndStop(0);
+
+
         }
         //avatar.children[0].play();
         return avatar;
@@ -234,11 +223,11 @@ export default class MyLife {
     }
 
     moveMyPlayer({x, y}, isMe, userId) {
-        let movedAvatar = isMe ? this.myAvatar: this.getAvatarById(userId);
-        x > movedAvatar.x ? movedAvatar.faceRight() : movedAvatar.faceLeft();
         isMe && this.divinity.player.move({x: x, y: y});
+        const movedAvatar = isMe ? this.myAvatar : this.getAvatarById(userId);
         movedAvatar.doWalk();
-        gsap.to(movedAvatar, {duration: 3, x: x, y: y, onComplete: movedAvatar.stopWalk})
+        gsap.to(movedAvatar, {duration: 3, x: x, y: y,
+            onComplete:movedAvatar.stopWalk})
     }
 
 

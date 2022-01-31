@@ -29,8 +29,11 @@ export default class Events {
                 if (!Object.keys(myLife.usersInRoom).includes(player.userId)) {
                     myLife.usersInRoom[Number(player.userId)] = player;
                 }
-                newObj[Number(player.userId)] = myLife.addAvatarToStage(player, isMe, player.coordinates);
-                myLife.userPositions.push(newObj);
+                setTimeout(() => {
+                    newObj[Number(player.userId)] = myLife.addAvatarToStage(player, isMe, player.coordinates);
+                    myLife.userPositions.push(newObj);
+                },2500)
+
             })
         })
 
