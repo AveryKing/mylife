@@ -91,8 +91,13 @@ export default class MyLife {
             if (!this.mouseOverAvatar && !this.playerContextMenuOpen) {
                 this.moveMyPlayer(this.getMousePosition(app.view, e), true);
             }
-
-
+        })
+        app.view.addEventListener('mousemove', (e) => {
+            if(this.getMousePosition(app.view, e).x > this.myAvatar.x) {
+                this.myAvatar.faceRight();
+            } else {
+                this.myAvatar.faceLeft();
+            }
         })
 
         const viewBuddies = new PIXI.Graphics();
@@ -191,13 +196,29 @@ export default class MyLife {
         let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet
         console.log(sheet)
         let animatedSprite = new PIXI.AnimatedSprite(sheet.animations["walk"]);
+
         animatedSprite.scale.set(0.225)
+        animatedSprite.anchor.set(0.5, 0.5);
         animatedSprite.animationSpeed = 0.4;
         const avatar = new PIXI.Container();
         avatar.addChild(animatedSprite);
         avatar.addChild(this.drawAvatarNameplate(player.username, animatedSprite));
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y;
+        avatar.faceRight = () => {
+            if(!this.currentlyWalking) {
+                avatar.children[0].scale.x = .225;
+            }
+
+        }
+        avatar.faceLeft = () => {
+            if(!this.currentlyWalking) {
+
+                avatar.children[0].scale.x = -.225;
+            }
+
+        }
+
         avatar.doWalk = () => {
             avatar.children[0].play();
         }
