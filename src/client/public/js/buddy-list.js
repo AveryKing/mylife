@@ -51,9 +51,6 @@ export default class BuddyList {
             buddyDiv.appendChild(buddyStatus);
         })
 
-
-
-        ////////////////////
         $( ".buddy-list" ).draggable();
 
 
