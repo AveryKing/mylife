@@ -1,3 +1,3 @@
-import Inventory from './inventory.js';
+import UserInterface from './user-interface.js';
 
-new Inventory();
+new UserInterface();
