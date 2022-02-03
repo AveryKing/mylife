@@ -107,38 +107,6 @@ export default class MyLife {
         return {x: x, y: y};
     }
 
-    drawAvatarCircle(player) {
-        const circle = new PIXI.Graphics();
-        circle.beginFill(0x57B1FF);
-        circle.drawCircle(30, 30, 30);
-        circle.endFill()
-        circle.interactive = true;
-        circle.hitArea = new PIXI.Circle(30, 30, 30);
-        circle.mouseover = (e) => {
-            this.mouseOverAvatar = true;
-            circle.cursor = "url('point-cursor.cur'),auto";
-            circle.clear();
-            circle.beginFill(0x57B1FF);
-            circle.lineStyle(5, 0xC1D500, 0.6);
-            circle.drawCircle(30, 30, 30);
-            circle.endFill()
-        }
-        circle.click = (e) => {
-            const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
-            const x = avatar.x;
-            const y = avatar.y;
-            new PlayerContextMenu(this, player, x, y);
-        }
-        circle.mouseout = (mouseData) => {
-            this.mouseOverAvatar = false;
-            circle.clear();
-            circle.beginFill(0x57B1FF);
-            circle.drawCircle(30, 30, 30);
-            circle.endFill()
-        }
-        return circle;
-    }
-
     drawAvatarNameplate(username, circle) {
         const namePlate = new PIXI.Graphics();
         const style = new PIXI.TextStyle({fontSize: 23});
@@ -167,7 +135,32 @@ export default class MyLife {
         avatar.addChild(animatedSprite);
         avatar.addChild(this.drawAvatarNameplate(player.username, animatedSprite));
         avatar.x = coordinates.X;
-        avatar.y = coordinates.Y;
+        avatar.y = coordinates.Y
+        avatar.mouseover = (e) => {
+            alert(1);
+            this.mouseOverAvatar = true;
+            avatar.cursor = "url('point-cursor.cur'),auto";
+            /*
+            circle.clear();
+            circle.beginFill(0x57B1FF);
+            circle.lineStyle(5, 0xC1D500, 0.6);
+            circle.drawCircle(30, 30, 30);
+            circle.endFill()
+
+             */
+        }
+
+        avatar.mouseout = (mouseData) => {
+            this.mouseOverAvatar = false;
+            /*
+            circle.clear();
+            circle.beginFill(0x57B1FF);
+            circle.drawCircle(30, 30, 30);
+            circle.endFill()
+            */
+
+        }
+
         avatar.faceRight = () => {
             if(!this.currentlyWalking) {
                 avatar.children[0].scale.x = .225;
@@ -181,10 +174,16 @@ export default class MyLife {
             }
 
         }
-
+        avatar.children[0].onclick = (e) => {
+            const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
+            const x = avatar.x;
+            const y = avatar.y;
+            new PlayerContextMenu(this, player, x, y);
+        }
         avatar.doWalk = () => {
             avatar.children[0].play();
         }
+
         avatar.stopWalk = () => {
 
                 avatar.children[0].gotoAndStop(0);
