@@ -124,10 +124,15 @@ export default class MyLife {
     }
 
     drawAvatar(player, coordinates) {
-        let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet
-        console.log(sheet)
+        let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet;
         let animatedSprite = new PIXI.AnimatedSprite(sheet.animations["walk"]);
-
+        animatedSprite.interactive = true;
+        animatedSprite.mousedown = () => {
+            const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
+            const x = avatar.x;
+            const y = avatar.y;
+            new PlayerContextMenu(this, player, x, y);
+        }
         animatedSprite.scale.set(0.225)
         animatedSprite.anchor.set(0.5, 0.5);
         animatedSprite.animationSpeed = 0.4;
@@ -136,7 +141,7 @@ export default class MyLife {
         avatar.addChild(this.drawAvatarNameplate(player.username, animatedSprite));
         avatar.x = coordinates.X;
         avatar.y = coordinates.Y
-        avatar.mouseover = (e) => {
+        avatar.onmouseover = (e) => {
             alert(1);
             this.mouseOverAvatar = true;
             avatar.cursor = "url('point-cursor.cur'),auto";
@@ -174,12 +179,7 @@ export default class MyLife {
             }
 
         }
-        avatar.children[0].onclick = (e) => {
-            const avatar = this.userPositions.find(x => x.hasOwnProperty(player.userId))[player.userId]
-            const x = avatar.x;
-            const y = avatar.y;
-            new PlayerContextMenu(this, player, x, y);
-        }
+
         avatar.doWalk = () => {
             avatar.children[0].play();
         }
