@@ -3,6 +3,7 @@ import Events from './events.js';
 import Utils from './utils.js';
 import PlayerContextMenu from "./player-context-menu.js";
 import BuddyList from './buddy-list.js';
+import UserInterface from "./user-interface.js";
 
 export default class MyLife {
     constructor(divinity) {
@@ -56,32 +57,8 @@ export default class MyLife {
         div.id = 'mainDiv';
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
-        let chatForm = document.createElement('form');
-        chatForm.id = 'chat-form';
-        let chatBox = document.createElement('input');
-        chatBox.autocomplete = 'off';
-        chatBox.id = 'chat-text-box';
-        chatBox.type = 'text';
-        chatBox.style.position = 'absolute';
-        chatBox.style.top = "575px";
-        chatBox.style.left = '180px';
-        chatBox.placeholder = 'Enter chat message here...';
-        chatBox.style.height = '30px';
-        chatBox.style.borderRadius = '10px';
-        chatBox.style.width = '400px';
-        chatBox.style.zIndex = 4;
-        chatForm.appendChild(chatBox);
-        let chatSend = document.createElement('button');
-        chatSend.type = 'submit';
-        chatSend.style.position = 'absolute';
-        chatSend.style.top = '576px';
-        chatSend.style.left = '590px';
-        chatSend.style.borderRadius = '8px';
-        chatSend.style.height = '33px';
-        chatSend.innerText = 'Send';
-        chatForm.appendChild(chatSend);
-        Utils.get('mainDiv').appendChild(chatForm);
-        this.myLifeEvents.setupGameUIEvents();
+
+
         const {coins} = playerData.playerData;
         const coinBalance = new PIXI.Text(`Coins: ${coins}`);
         this.stage = app.stage;
@@ -100,13 +77,7 @@ export default class MyLife {
             }
         })
 
-
-
-
-
-
-
-
+        new UserInterface(this.myLifeEvents);
 
         return app;
     }
