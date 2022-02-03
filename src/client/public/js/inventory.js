@@ -59,12 +59,16 @@ export default class Inventory {
             ctx.font = "15px Arial";
             ctx.fillText("Item Name",15,20);
             var img = document.createElement("img");
-
             img.src=canvas.toDataURL();
             item.appendChild(img);
-            const itemImage = new Image();
+            var itemImage = new Image();
+            itemImage.onload = function () {
+                var x = canvas.width / 2, y = canvas.height / 2;
+                ctx.drawImage(itemImage, x, y);
+            }
+            itemImage.style.width = canvas.width;
             itemImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
-            ctx.drawImage(itemImage, 0, 0)
+            item.appendChild(itemImage);
             img.addEventListener('mouseover', (e) => {
                 console.log(e.target.closest('div'))
                 mouseOverItem(e.target.closest('div'));
@@ -78,7 +82,5 @@ export default class Inventory {
         div.appendChild(background);
         document.body.appendChild(div)
         $(".inventory-panel").draggable();
-
-
     }
 }
