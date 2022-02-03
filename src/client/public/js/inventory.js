@@ -1,5 +1,24 @@
 export default class Inventory {
     constructor() {
+        /**
+        const test = document.createElement('canvas');
+        test.width = 100;
+        test.height = 100;
+        var testContext = test.getContext('2d');
+        test.style.border = '1px solid black';
+        testContext.font = "15px Arial";
+        document.body.appendChild(test);
+        testContext.fillText("Item Name",15,23);
+        const img1 = document.createElement('img');
+        img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
+        img1.width = '50px';
+
+        img1.onload = function () {
+            const x = canvas.width / 4, y = canvas.height / 4;
+            testContext.drawImage(img1, x, y+8, 50,50);
+        }
+        **/
+        //////
         const div = document.createElement('div');
         div.style.display = 'flex';
         div.style.justifyContent = 'center';
@@ -51,29 +70,27 @@ export default class Inventory {
             item.style.margin = '5px';
             item.style.borderRadius = '5px';
             item.style.border = '1px solid black';
-            var canvas = document.createElement("canvas");
-            canvas.width = 100;
-            canvas.height = 100;
+            const test = document.createElement('canvas');
+            test.width = 100;
+            test.height = 100;
+            var testContext = test.getContext('2d');
+            testContext.font = "15px Arial";
+            testContext.fillText("Item Name",15,23);
+            const img1 = document.createElement('img');
+            img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
+            img1.width = '50px';
 
-            var ctx = canvas.getContext('2d');
-            ctx.font = "15px Arial";
-            ctx.fillText("Item Name",15,20);
-            var img = document.createElement("img");
-            img.src=canvas.toDataURL();
-            item.appendChild(img);
-            var itemImage = new Image();
-            itemImage.onload = function () {
-                var x = canvas.width / 2, y = canvas.height / 2;
-                ctx.drawImage(itemImage, x, y);
+            img1.onload = function () {
+                const x = test.width / 4, y = test.height / 4;
+                 testContext.drawImage(img1, x, y+8, 50,50);
             }
-            itemImage.style.width = canvas.width;
-            itemImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
-            item.appendChild(itemImage);
-            img.addEventListener('mouseover', (e) => {
+            item.appendChild(test);
+
+            test.addEventListener('mouseover', (e) => {
                 console.log(e.target.closest('div'))
                 mouseOverItem(e.target.closest('div'));
             })
-            img.addEventListener('mouseout', (e) => {
+            test.addEventListener('mouseout', (e) => {
                 mouseOffItem(e.target.closest('div'));
             })
             mainPanel1.appendChild(item);
