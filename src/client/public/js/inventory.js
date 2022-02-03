@@ -80,10 +80,14 @@ export default class Inventory {
             img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
             img1.width = '50px';
 
-            img1.onload = function () {
-                const x = test.width / 4, y = test.height / 4;
-                 testContext.drawImage(img1, x, y+8, 50,50);
-            }
+            (function(testContext, img1) {
+                img1.onload = function() {
+                    const x = test.width / 4, y = test.height / 4;
+                    testContext.drawImage(img1, x, y+8, 50,50);
+                }
+                img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
+            })(testContext, img1);
+            
             item.appendChild(test);
 
             test.addEventListener('mouseover', (e) => {
