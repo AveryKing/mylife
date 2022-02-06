@@ -20,7 +20,7 @@ export default class EventHandler {
 
     onMessage(e) {
         const data = JSON.parse(e.data)
-        console.log(data);
+       // console.log(data);
         switch (data.cmd) {
 
             case Responses.LoadBuddyListResponse:
@@ -74,6 +74,12 @@ export default class EventHandler {
                     detail: data.data
                 })
                 document.dispatchEvent(chatMsgReceived);
+                break;
+            case Responses.InventoryLoaded:
+                const inventoryLoadedEvent = new CustomEvent('loadInventory', {
+                    detail:data.data
+                })
+                document.dispatchEvent(inventoryLoadedEvent);
                 break;
             case Responses.InventoryItemRemoved:
                 const itemRemovedEvent = new CustomEvent('inventoryItemRemoved', {

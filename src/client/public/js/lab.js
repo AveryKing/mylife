@@ -1,2 +1,2 @@
-import Inventory from './inventory.js';
-new Inventory();
+import GenderSelector from './gender-selector.js';
+new GenderSelector();

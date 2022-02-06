@@ -32,7 +32,7 @@ export default class UserInterface {
         buddiesButton.innerText = 'View Buddies';
         inventoryButton.innerText = 'View Inventory';
         inventoryButton.onclick = () => {
-            new Inventory();
+            new Inventory(myLifeEvents.myLife);
         }
         document.body.appendChild(buddiesButton);
         document.body.appendChild(inventoryButton);

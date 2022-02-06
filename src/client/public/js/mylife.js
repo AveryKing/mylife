@@ -20,6 +20,7 @@ export default class MyLife {
         this.chatMessages = [];
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
+        this.inventory = undefined;
     }
 
     setup() {
@@ -86,6 +87,10 @@ export default class MyLife {
         this.app.stage.interactive = !this.app.stage.interactive;
     }
 
+    loadInventory(items) {
+        this.inventory = items;
+        console.log(this.inventory);
+    }
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);

@@ -73,7 +73,15 @@ export default class Events {
             const messageText = e.detail.text;
             myLife.chatMessageReceived(fromUser, messageText);
         })
+
+        document.addEventListener('loadInventory', (e) => {
+            myLife.loadInventory(Object.values(e.detail));
+        })
     }
+
+
+
+
 
     setupGameUIEvents() {
         Utils.get('chat-form').onsubmit = (e) => {
