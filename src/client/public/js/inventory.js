@@ -1,5 +1,5 @@
 export default class Inventory {
-    constructor() {
+    constructor(myLife) {
         const div = document.createElement('div');
         div.style.display = 'flex';
         div.style.justifyContent = 'center';
@@ -46,7 +46,7 @@ export default class Inventory {
             target.style.borderColor = 'gray';
             target.styleborderWidth = '1px';
         }
-        for(let i=0; i<15; i++) {
+        for(let i=0; i<myLife.inventory.length; i++) {
             const item = document.createElement('div');
             item.style.margin = '5px';
             item.style.borderRadius = '5px';
@@ -56,7 +56,7 @@ export default class Inventory {
             test.height = 100;
             const testContext = test.getContext('2d');
             testContext.font = "15px Arial";
-            testContext.fillText("Item Name",15,23);
+            testContext.fillText(myLife.inventory[i].itemName,15,23);
             const img1 = document.createElement('img');
             img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
             img1.width = '50px';
@@ -68,7 +68,7 @@ export default class Inventory {
                 }
                 img1.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png';
             })(testContext, img1);
-            
+
             item.appendChild(test);
 
             test.addEventListener('mouseover', (e) => {
