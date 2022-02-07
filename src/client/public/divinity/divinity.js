@@ -9,6 +9,9 @@ export default class Divinity {
         this.player = undefined;
     }
 
+    doRegistration() {
+
+    }
     doLogin(userId, loginKey) {
         this.game.send(Commands.login(userId, loginKey));
     }

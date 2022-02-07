@@ -28,28 +28,31 @@ export default class MyLife {
 
     }
     buildGameCanvas(playerData) {
+        // Draws HTML5 Canvas
         const app = new PIXI.Application({
             width: 800,
             height: 600,
 
             backgroundColor: 0xFFFFFF,
         });
+
+        // Loads avatar assets
         let loader = PIXI.Loader.shared;
         loader.onComplete.add(() => {
-
             let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet
             console.log(sheet)
-           let avatar = new PIXI.AnimatedSprite(sheet.animations["walk"]);
+            let avatar = new PIXI.AnimatedSprite(sheet.animations["walk"]);
             avatar.scale.set(0.225)
             avatar.animationSpeed = 0.4;
             this.avatarSprite = avatar;
-         //   avatar.play();
-            //app.stage.addChild(avatar);
+
         })
         loader
             .add("assets/spritesheet.json")
             .load(this.setup);
 
+
+        /// UI setup
         app.view.style.border = "2px solid black";
         app.view.style.position = 'absolute';
         app.view.style.zIndex = -1;
@@ -58,13 +61,16 @@ export default class MyLife {
         div.id = 'mainDiv';
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
-
-
         const {coins} = playerData.playerData;
         const coinBalance = new PIXI.Text(`Coins: ${coins}`);
         this.stage = app.stage;
         app.stage.addChild(coinBalance);
         app.stage.interactive = true;
+        new UserInterface(this.myLifeEvents);
+
+        /**
+         * Event listeners (walking & changing directions
+         */
         app.view.addEventListener('click', (e) => {
             if (!this.mouseOverAvatar && !this.playerContextMenuOpen) {
                 this.moveMyPlayer(this.getMousePosition(app.view, e), true);
@@ -78,8 +84,6 @@ export default class MyLife {
             }
         })
 
-        new UserInterface(this.myLifeEvents);
-
         return app;
     }
 
@@ -91,6 +95,7 @@ export default class MyLife {
         this.inventory = items;
         console.log(this.inventory);
     }
+
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);

@@ -1,8 +1,25 @@
 import Utils from './utils.js';
-
+import GenderSelector from './gender-selector.js';
 export default class Login {
     constructor() {
         this.loginFailed = false;
+
+        document.querySelector('#open-login').addEventListener('click', () => {
+            document.querySelector('#login-div').style.display = 'block';
+            document.querySelector('#open-login').style.display = 'none';
+        })
+
+        document.querySelector('#open-register').addEventListener('click', () => {
+            document.querySelector('#buttons-div').style.display = "none";
+            document.querySelector('#login-div').style.display = "none";
+            let loadingDiv = document.createElement('div');
+            loadingDiv.id = "loading";
+            let loadingCircle = document.createElement('img');
+            loadingCircle.src = "assets/loading/loading-circle.gif";
+            loadingDiv.appendChild(loadingCircle)
+            document.body.appendChild(loadingDiv);
+                new GenderSelector();
+            })
     }
 
     loginSuccess() {
