@@ -1,5 +1,10 @@
 export default class Commands {
 
+    static register() {
+        return JSON.stringify({
+            "cmd":"register"
+        })
+    }
     static login(userId, loginKey) {
         return JSON.stringify({
             "cmd": "login",
