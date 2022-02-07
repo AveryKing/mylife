@@ -170,6 +170,11 @@ export default class GenderSelector {
             if(!selectedGender || nameInput.value.trim().length < 1) {
                 //TODO: Replace with generic dialog.
                 alert('Please choose a gender and username to continue.');
+            } else {
+                axios.post('http://localhost:1337/test')
+                    .then(res => {
+                        console.log(res.data);
+                    })
             }
         }
 
