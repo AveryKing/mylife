@@ -5,11 +5,11 @@ export default class GenderSelector {
         const divinity = new Divinity('ws://127.0.0.1:6969/Game');
         divinity.game.addEventListener('open', (e) => {
             document.querySelector('#loading').style.display = 'none';
-            this.startGenderSelector();
+            this.startGenderSelector(divinity);
         });
     }
 
-    startGenderSelector() {
+    startGenderSelector(divinity) {
             const div = document.createElement('div');
             div.style.display = 'flex';
             div.style.position = 'relative';
@@ -180,10 +180,7 @@ export default class GenderSelector {
                     //TODO: Replace with generic dialog.
                     alert('Please choose a gender and username to continue.');
                 } else {
-                    axios.post('http://localhost:1337/test')
-                        .then(res => {
-                            console.log(res.data);
-                        })
+                    divinity.doRegistration();
                 }
             }
 
