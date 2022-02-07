@@ -180,7 +180,7 @@ export default class GenderSelector {
                     //TODO: Replace with generic dialog.
                     alert('Please choose a gender and username to continue.');
                 } else {
-                    divinity.doRegistration();
+                    divinity.doRegistration(nameInput.value.trim(), selectedGender);
                 }
             }
 
