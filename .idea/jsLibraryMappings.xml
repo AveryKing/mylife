@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{createjs, gsap, jquery-3.6.0, jquery-ui, phaser, pixi.js, scrollbox}" />
+    <file url="PROJECT" libraries="{axios, createjs, gsap, jquery-3.6.0, jquery-ui, phaser, pixi.js, scrollbox}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
