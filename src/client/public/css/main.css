@@ -1,6 +1,11 @@
 #login-div {
     text-align:center;
-    margin-top:30vh;
+    display:none;
+}
+
+#buttons-div {
+    text-align:center;
+    margin-top:25vh;
 }
 
 canvas {
