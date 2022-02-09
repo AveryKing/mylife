@@ -40,7 +40,7 @@ export default class Events {
         document.addEventListener('loadBuddyList', (e) => {
             if(!this.buddiesLoaded) {
                 this.buddiesLoaded = true;
-                new BuddyList(e.detail);
+                //new BuddyList(e.detail);
             }
         })
         document.addEventListener('userJoined', (e) => {

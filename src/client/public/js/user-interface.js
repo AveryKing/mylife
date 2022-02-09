@@ -1,4 +1,5 @@
 import Inventory from './inventory.js';
+import DevTools from "./dev-tools.js";
 import Utils from "./utils.js";
 export default class UserInterface {
     constructor(myLifeEvents) {
@@ -27,16 +28,30 @@ export default class UserInterface {
         chatSend.innerText = 'Send';
         chatForm.appendChild(chatSend);
         Utils.get('mainDiv').appendChild(chatForm);
+        let menu = document.createElement('div');
+
         let buddiesButton = document.createElement('button');
         let inventoryButton = document.createElement('button');
+        buddiesButton.classList.add('button-4');
+        inventoryButton.classList.add('button-4');
+        let devTools = document.createElement('button');
+        devTools.classList.add('button-4');
+        devTools.innerText = 'Dev Tools';
+        devTools.onclick = () => {
+            new DevTools(myLifeEvents.myLife.divinity);
+        }
+        menu.appendChild(devTools);
+
         buddiesButton.innerText = 'View Buddies';
         inventoryButton.innerText = 'View Inventory';
         inventoryButton.onclick = () => {
             new Inventory(myLifeEvents.myLife);
         }
-        document.body.appendChild(buddiesButton);
-        document.body.appendChild(inventoryButton);
-
+       menu.appendChild(buddiesButton);
+        menu.appendChild(inventoryButton);
+        menu.style.display = 'flex';
+        menu.style.justifyContent = 'center';
+        document.body.appendChild(menu);
         myLifeEvents.setupGameUIEvents();
     }
 }

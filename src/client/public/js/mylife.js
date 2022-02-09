@@ -21,6 +21,7 @@ export default class MyLife {
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
         this.inventory = undefined;
+        this.currentRoomName = "MyLife";
     }
 
     setup() {
@@ -57,6 +58,7 @@ export default class MyLife {
         app.view.style.position = 'absolute';
         app.view.style.zIndex = -1;
         app.view.style.borderRadius = "10px";
+        app.view.style.top = '10px';
         const div = document.createElement('div');
         div.id = 'mainDiv';
         document.body.appendChild(div)
@@ -65,6 +67,10 @@ export default class MyLife {
         const coinBalance = new PIXI.Text(`Coins: ${coins}`);
         this.stage = app.stage;
         app.stage.addChild(coinBalance);
+        const roomName = new PIXI.Text(this.currentRoomName,new PIXI.TextStyle({fontSize: 17}));
+        roomName.x = 710;
+        roomName.y = 10;
+        app.stage.addChild(roomName);
         app.stage.interactive = true;
         new UserInterface(this.myLifeEvents);
 

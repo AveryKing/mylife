@@ -20,7 +20,7 @@ export default class EventHandler {
 
     onMessage(e) {
         const data = JSON.parse(e.data)
-       // console.log(data);
+        console.log(data);
         switch (data.cmd) {
 
             case Responses.LoadBuddyListResponse:

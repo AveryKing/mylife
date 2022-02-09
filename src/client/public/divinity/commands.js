@@ -44,4 +44,11 @@ export default class Commands {
             "cmd":"getBuddyList"
         })
     }
+
+    static changeRoom(roomId) {
+        return JSON.stringify({
+            "cmd":"changeRoom",
+            "roomId":roomId
+        })
+    }
 }

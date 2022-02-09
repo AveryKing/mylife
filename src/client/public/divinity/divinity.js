@@ -20,6 +20,9 @@ export default class Divinity {
         this.game.send(Commands.sendChat(fromUser, messageText));
     }
 
+    changeRoom(roomId) {
+        this.game.send(Commands.changeRoom(roomId));
+    }
     getBuddyList() {
       this.game.send(Commands.getBuddyList());
     }

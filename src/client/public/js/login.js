@@ -4,14 +4,14 @@ export default class Login {
     constructor() {
         this.loginFailed = false;
 
-        document.querySelector('#open-login').addEventListener('click', () => {
-            document.querySelector('#login-div').style.display = 'block';
-            document.querySelector('#open-login').style.display = 'none';
+        Utils.get('open-login').addEventListener('click', () => {
+            Utils.get('login-div').style.display = 'block';
+            Utils.get('open-login').style.display = "none";
         })
 
-        document.querySelector('#open-register').addEventListener('click', () => {
-            document.querySelector('#buttons-div').style.display = "none";
-            document.querySelector('#login-div').style.display = "none";
+        Utils.get('open-register').addEventListener('click', () => {
+            Utils.get('buttons-div').style.display = "none";
+            Utils.get('login-div').style.display = "none";
             let loadingDiv = document.createElement('div');
             loadingDiv.id = "loading";
             let loadingCircle = document.createElement('img');
@@ -24,6 +24,7 @@ export default class Login {
 
     loginSuccess() {
         Utils.get('login-div').style.display = 'none';
+        Utils.get('buttons-div').style.display = 'none';
         let loadingDiv = document.createElement('div');
         loadingDiv.id = "loading";
         let loadingCircle = document.createElement('img');
@@ -33,6 +34,7 @@ export default class Login {
         setTimeout(() => {
             loadingDiv.style.display = 'none';
             Utils.get('mainDiv').style.display = 'block';
+
         },2500)
     }
 
