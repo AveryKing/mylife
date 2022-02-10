@@ -30,6 +30,7 @@ export default class Events {
                     myLife.usersInRoom[Number(player.userId)] = player;
                 }
                 setTimeout(() => {
+                    //myLife.removeOldAvatars();
                     newObj[Number(player.userId)] = myLife.addAvatarToStage(player, isMe, player.coordinates);
                     myLife.userPositions.push(newObj);
                 },2500)
@@ -64,7 +65,12 @@ export default class Events {
         });
 
         document.addEventListener('userLeft', (e) => {
-            myLife.removeAvatarFromStage(e.detail.userId);
+            if(e.detail.userId === this.myLife.myUserId) {
+                myLife.removeAvatarFromStage(0);
+            } else {
+                myLife.removeAvatarFromStage(e.detail.userId);
+            }
+
 
         });
 
@@ -79,16 +85,11 @@ export default class Events {
         })
     }
 
-
-
-
-
     setupGameUIEvents() {
         Utils.get('chat-form').onsubmit = (e) => {
             e.preventDefault();
             this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-text-box').value);
             Utils.get('chat-text-box').value = '';
-
 
         }
     }

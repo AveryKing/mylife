@@ -38,7 +38,7 @@ export default class UserInterface {
         devTools.classList.add('button-4');
         devTools.innerText = 'Dev Tools';
         devTools.onclick = () => {
-            new DevTools(myLifeEvents.myLife.divinity);
+            new DevTools(myLifeEvents.myLife);
         }
         menu.appendChild(devTools);
 

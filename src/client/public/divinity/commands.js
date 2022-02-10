@@ -48,7 +48,9 @@ export default class Commands {
     static changeRoom(roomId) {
         return JSON.stringify({
             "cmd":"changeRoom",
-            "roomId":roomId
+            "data": {
+                "roomId":roomId
+            }
         })
     }
 }

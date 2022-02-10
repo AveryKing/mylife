@@ -1,8 +1,6 @@
 const express = require('express');
 const open = require('open');
-const cors = require('cors');
 const app = express();
-app.use(cors());
 app.use(express.static('src/client/public'));
 console.log(process.env);
 app.listen(1337, () => {

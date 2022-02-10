@@ -1,5 +1,5 @@
 export default class DevTools {
-    constructor(divinity) {
+    constructor(myLife) {
         let mainDiv = document.createElement('div');
         mainDiv.style.display = 'block';
         mainDiv.style.height = '200px';
@@ -16,9 +16,17 @@ export default class DevTools {
         switchRoom.innerText = 'Switch room';
         switchRoom.style.borderRadius = '8px';
         switchRoom.onclick = () => {
-            divinity.changeRoom(window.prompt('Enter room ID'));
+            myLife.divinity.changeRoom(window.prompt('Enter room ID'));
         }
         mainDiv.appendChild(switchRoom);
+        let clearAvatars = document.createElement('button');
+        clearAvatars.innerText = 'Clear Avatars';
+        switchRoom.style.marginTop = '30px';
+        switchRoom.style.marginLeft = '10px';
+        clearAvatars.onclick = () => {
+            myLife.removeMyAvatar();
+        }
+        mainDiv.appendChild(clearAvatars);
         $('#dev-tools').draggable();
     }
 }

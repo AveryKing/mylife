@@ -112,10 +112,22 @@ export default class MyLife {
     }
 
     removeAvatarFromStage(userId) {
-        this.app.stage.removeChild(this.getAvatarById(userId));
-        this.userPositions = this.userPositions.filter(user => !user.hasOwnProperty(userId));
+        if(userId === 0) {
+            this.app.stage.removeChild(this.avatarSprite);
+            this.userPositions = this.userPositions.filter(user => !user.hasOwnProperty(this.myUserId));
+        } else {
+            this.app.stage.removeChild(this.getAvatarById(userId));
+            this.userPositions = this.userPositions.filter(user => !user.hasOwnProperty(userId));
+        }
+
     }
 
+    removeOldAvatars() {
+        this.userPositions.forEach(user => {
+           Object.values(user)[0].removeFromStage();
+        })
+    }
+hi
     getMousePosition(canvas, event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -205,6 +217,16 @@ export default class MyLife {
                 avatar.children[0].gotoAndStop(0);
 
 
+        }
+
+        avatar.removeFromStage = () => {
+            console.log(`removing ${player.username}`);
+            const userLeftEvent = new CustomEvent('userLeft', {
+                detail: {
+                    "userId": player.userId
+                }
+            });
+            document.dispatchEvent(userLeftEvent);
         }
         //avatar.children[0].play();
         return avatar;
