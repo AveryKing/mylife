@@ -226,7 +226,10 @@ hi
                     "userId": player.userId
                 }
             });
-            document.dispatchEvent(userLeftEvent);
+            if(player.userId !== this.myUserId) {
+                document.dispatchEvent(userLeftEvent);
+
+            }
         }
         //avatar.children[0].play();
         return avatar;

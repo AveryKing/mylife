@@ -25,12 +25,12 @@ export default class Events {
         document.addEventListener('roomLoaded', (e) => {
             e.detail.forEach(player => {
                 const newObj = {};
+                myLife.removeOldAvatars();
                 const isMe = Number(player.userId) === Number(myLife.myUserId);
                 if (!Object.keys(myLife.usersInRoom).includes(player.userId)) {
                     myLife.usersInRoom[Number(player.userId)] = player;
                 }
                 setTimeout(() => {
-                    //myLife.removeOldAvatars();
                     newObj[Number(player.userId)] = myLife.addAvatarToStage(player, isMe, player.coordinates);
                     myLife.userPositions.push(newObj);
                 },2500)

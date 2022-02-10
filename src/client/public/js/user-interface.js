@@ -28,24 +28,35 @@ export default class UserInterface {
         chatSend.innerText = 'Send';
         chatForm.appendChild(chatSend);
         Utils.get('mainDiv').appendChild(chatForm);
-        let menu = document.createElement('div');
 
+        let menu = document.createElement('div');
+        let inventoryOpen = false;
+        let buddiesOpen = false;
+        let devOpen = false;
         let buddiesButton = document.createElement('button');
         let inventoryButton = document.createElement('button');
         buddiesButton.classList.add('button-4');
+
         inventoryButton.classList.add('button-4');
         let devTools = document.createElement('button');
         devTools.classList.add('button-4');
         devTools.innerText = 'Dev Tools';
         devTools.onclick = () => {
-            new DevTools(myLifeEvents.myLife);
+            if(!devOpen) {
+                new DevTools(myLifeEvents.myLife);
+                devOpen = true;
+            }
+
         }
         menu.appendChild(devTools);
 
         buddiesButton.innerText = 'View Buddies';
         inventoryButton.innerText = 'View Inventory';
         inventoryButton.onclick = () => {
-            new Inventory(myLifeEvents.myLife);
+            if(!inventoryOpen) {
+                new Inventory(myLifeEvents.myLife);
+                inventoryOpen = true;
+            }
         }
        menu.appendChild(buddiesButton);
         menu.appendChild(inventoryButton);
