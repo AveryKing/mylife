@@ -16,5 +16,6 @@
     <orderEntry type="library" name="jquery-3.6.0" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
     <orderEntry type="library" name="axios" level="application" />
+    <orderEntry type="library" name="jquery-modal" level="application" />
   </component>
 </module>

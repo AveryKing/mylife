@@ -61,7 +61,16 @@ export default class EventHandler {
                 const roomLoadedEvent = new CustomEvent('roomLoaded', {
                     detail: players
                 });
+                const roomData = {}
+                console.log(data.data)
+                roomData['roomName'] = data.data.roomName;
+                roomData['roomId'] = data.data.roomId;
+                roomData['roomOwner'] = data.data.roomOwner;
                 document.dispatchEvent(roomLoadedEvent);
+                const roomDataEvent = new CustomEvent('roomData', {
+                    detail:roomData
+                })
+                document.dispatchEvent(roomDataEvent);
                 break;
             case Responses.UserLeftResponse:
                 const userLeftEvent = new CustomEvent('userLeft', {

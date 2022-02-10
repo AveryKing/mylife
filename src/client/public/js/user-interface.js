@@ -3,6 +3,7 @@ import DevTools from "./dev-tools.js";
 import Utils from "./utils.js";
 export default class UserInterface {
     constructor(myLifeEvents) {
+        this.inventoryOpen = false;
         let chatForm = document.createElement('form');
         chatForm.id = 'chat-form';
         let chatBox = document.createElement('input');
@@ -16,7 +17,7 @@ export default class UserInterface {
         chatBox.style.height = '30px';
         chatBox.style.borderRadius = '10px';
         chatBox.style.width = '400px';
-        chatBox.style.zIndex = 4;
+        chatBox.style.zIndex = '3';
         chatForm.appendChild(chatBox);
         let chatSend = document.createElement('button');
         chatSend.type = 'submit';
@@ -53,9 +54,9 @@ export default class UserInterface {
         buddiesButton.innerText = 'View Buddies';
         inventoryButton.innerText = 'View Inventory';
         inventoryButton.onclick = () => {
-            if(!inventoryOpen) {
-                new Inventory(myLifeEvents.myLife);
-                inventoryOpen = true;
+            if(!this.inventoryOpen) {
+                new Inventory(myLifeEvents.myLife,this);
+                this.inventoryOpen = true;
             }
         }
        menu.appendChild(buddiesButton);

@@ -1,8 +1,11 @@
+
 export default class Inventory {
-    constructor(myLife) {
+    constructor(myLife,parent) {
         const div = document.createElement('div');
+        div.style.position = 'absolute';
         div.style.display = 'flex';
         div.style.justifyContent = 'center';
+        div.style.zIndex = '1000';
         const background = document.createElement('div');
         background.classList.add('inventory-panel');
         background.style.width = '700px';
@@ -81,6 +84,20 @@ export default class Inventory {
             mainPanel1.appendChild(item);
         }
         background.appendChild(mainPanel);
+        let exit = document.createElement('button');
+        exit.style.borderRadius = '100px';
+        exit.style.backgroundColor = '#ff0000';
+        exit.style.innerText = 'Exit';
+        exit.style.height = '50px';
+        exit.style.width = '50px';
+        exit.style.top = '5px';
+        exit.style.right = '5px';
+        exit.style.position  = 'absolute';
+        exit.onclick = () => {
+            div.remove();
+            parent.inventoryOpen = false;
+        }
+        background.appendChild(exit);
         div.appendChild(background);
         document.body.appendChild(div)
         $(".inventory-panel").draggable();

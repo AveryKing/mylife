@@ -38,6 +38,11 @@ export default class Events {
             })
         })
 
+        document.addEventListener('roomData', (e) => {
+            console.table(e.detail);
+            myLife.currentRoomName.text = e.detail.roomName;
+        })
+
         document.addEventListener('loadBuddyList', (e) => {
             if(!this.buddiesLoaded) {
                 this.buddiesLoaded = true;

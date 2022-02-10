@@ -21,7 +21,7 @@ export default class MyLife {
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
         this.inventory = undefined;
-        this.currentRoomName = "MyLife";
+        this.currentRoomName = undefined;
     }
 
     setup() {
@@ -64,12 +64,15 @@ export default class MyLife {
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
         const {coins} = playerData.playerData;
-        const coinBalance = new PIXI.Text(`Coins: ${coins}`);
+        const coinBalance = new PIXI.Text(`Coins: ${coins}`,new PIXI.TextStyle({fontSize: 17}));
+        coinBalance.y = 10;
+        coinBalance.x = 10;
         this.stage = app.stage;
         app.stage.addChild(coinBalance);
         const roomName = new PIXI.Text(this.currentRoomName,new PIXI.TextStyle({fontSize: 17}));
-        roomName.x = 710;
+        roomName.x = 620;
         roomName.y = 10;
+        this.currentRoomName = roomName;
         app.stage.addChild(roomName);
         app.stage.interactive = true;
         new UserInterface(this.myLifeEvents);
@@ -137,13 +140,13 @@ hi
 
     drawAvatarNameplate(username, circle) {
         const namePlate = new PIXI.Graphics();
-        const style = new PIXI.TextStyle({fontSize: 23});
+        const style = new PIXI.TextStyle({fontSize: 20});
         const avatarName = new PIXI.Text(username, style);
         namePlate.beginFill(0xC7C7C7);
         namePlate.drawRoundedRect(0, 0, 80, 20, 10,20,20);
         namePlate.endFill();
-        namePlate.x = circle.x - 10;
-        namePlate.y = circle.y + 140;
+        namePlate.y += 70;
+        namePlate.x -= 35;
         avatarName.y -= 5;
         avatarName.x += 5;
         avatarName.fontSize = 5;
