@@ -6,28 +6,35 @@ export default class UserInterface {
         this.inventoryOpen = false;
         let chatForm = document.createElement('form');
         chatForm.id = 'chat-form';
+        chatForm.style.display = 'flex';
+        chatForm.style.position = 'absolute';
         let chatBox = document.createElement('input');
         chatBox.autocomplete = 'off';
         chatBox.id = 'chat-text-box';
         chatBox.type = 'text';
         chatBox.style.position = 'absolute';
-        chatBox.style.top = "575px";
-        chatBox.style.left = '180px';
+        chatBox.style.top = "553px";
+        chatBox.style.border = "none";
+        chatBox.style.left = '210px';
         chatBox.placeholder = 'Enter chat message here...';
-        chatBox.style.height = '30px';
+        chatBox.style.height = '25px';
         chatBox.style.borderRadius = '10px';
-        chatBox.style.width = '400px';
+        chatBox.style.width = '310px';
+        chatBox.onfocus = () => {
+            chatBox.style.outline = 'none';
+        }
         chatBox.style.zIndex = '3';
-        chatForm.appendChild(chatBox);
+        //chatForm.appendChild(chatBox);
         let chatSend = document.createElement('button');
         chatSend.type = 'submit';
         chatSend.style.position = 'absolute';
-        chatSend.style.top = '576px';
-        chatSend.style.left = '590px';
-        chatSend.style.borderRadius = '8px';
-        chatSend.style.height = '33px';
+        chatSend.style.top = '555px';
+        chatSend.style.left = '525px';
+        chatSend.style.borderRadius = '12px';
+        chatSend.style.height = '25px';
+        chatSend.style.width = '70px';
         chatSend.innerText = 'Send';
-        chatForm.appendChild(chatSend);
+      //  chatForm.appendChild(chatSend);
         Utils.get('mainDiv').appendChild(chatForm);
 
         let menu = document.createElement('div');

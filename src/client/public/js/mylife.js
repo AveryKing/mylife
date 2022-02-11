@@ -4,7 +4,7 @@ import Utils from './utils.js';
 import PlayerContextMenu from "./player-context-menu.js";
 import BuddyList from './buddy-list.js';
 import UserInterface from "./user-interface.js";
-
+import GenericButton from "./lab.js";
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -33,7 +33,7 @@ export default class MyLife {
         const app = new PIXI.Application({
             width: 800,
             height: 600,
-
+            antialias:true,
             backgroundColor: 0xFFFFFF,
         });
 
@@ -74,8 +74,35 @@ export default class MyLife {
         roomName.y = 10;
         this.currentRoomName = roomName;
         app.stage.addChild(roomName);
-        app.stage.interactive = true;
+        app.stage.interactive = true
+        const bottomHudSvg = "assets/bottom-hud.svg";
+        const baseTexture = new PIXI.resources.SVGResource("assets/bottom-hud.svg", {
+            scale:1
+        })
+        const bottomHudTexture = new PIXI.Texture.from(baseTexture);
+        const bottomHud = new PIXI.Sprite.from(bottomHudTexture);
+        bottomHud.y = 500;
+
+        app.stage.addChild(bottomHud);
         new UserInterface(this.myLifeEvents);
+
+        const input = new PIXI.TextInput({
+            input: {
+                fontFamily: 'Arial',
+                fontSize: '15px',
+                padding: '14px 24px',
+                width: '310px',
+                color: 'black'
+            }
+        })
+        input.id = 'chat-input-text'
+        input.placeholder = 'Enter chat message here...'
+        input.x = 380
+        input.y = 522
+        input.pivot.x = input.width/2
+        input.pivot.y = input.height/2
+        app.stage.addChild(input)
+        new GenericButton(app);
 
         /**
          * Event listeners (walking & changing directions

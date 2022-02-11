@@ -90,11 +90,15 @@ export default class Events {
         })
     }
 
+    chatMessageSent(msg) {
+        this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-input-text').text);
+        Utils.get('chat-input-text').text = '';
+    }
     setupGameUIEvents() {
         Utils.get('chat-form').onsubmit = (e) => {
             e.preventDefault();
-            this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-text-box').value);
-            Utils.get('chat-text-box').value = '';
+            this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-input-text').text);
+            Utils.get('chat-input-text').text = '';
 
         }
     }

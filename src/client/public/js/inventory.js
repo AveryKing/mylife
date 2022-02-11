@@ -87,11 +87,13 @@ export default class Inventory {
         let exit = document.createElement('button');
         exit.style.borderRadius = '100px';
         exit.style.backgroundColor = '#ff0000';
-        exit.style.innerText = 'Exit';
+        exit.style.color = '#FFFFFF';
+        exit.style.fontSize = '25px';
+        exit.innerText = 'X';
         exit.style.height = '50px';
         exit.style.width = '50px';
-        exit.style.top = '5px';
-        exit.style.right = '5px';
+        exit.style.top = '0px';
+        exit.style.right = '0px';
         exit.style.position  = 'absolute';
         exit.onclick = () => {
             div.remove();
