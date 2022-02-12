@@ -19,6 +19,7 @@ export default class MyLife {
         this.stage = undefined;
         this.usersInRoom = {};
         this.userPositions = [];
+        this.UI = undefined;
         this.chatMessages = [];
         this.events = [];
         this.eventsList = undefined;
@@ -117,7 +118,7 @@ export default class MyLife {
         this.chatBox = input;
         app.stage.addChild(input)
         new GenericButton(app);
-        const eventsBtn = new UIButtons(app);
+        new UIButtons(this,app.stage);
 
 
         /**

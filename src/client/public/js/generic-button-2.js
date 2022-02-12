@@ -1,7 +1,10 @@
 import Utils from './Utils.js';
+import EventsList from "./events-list.js";
+import Inventory from "./inventory.js";
     class EventButton {
-        constructor(app) {
+        constructor(myLife, stage) {
             const button = new PIXI.Graphics();
+            button.lineStyle(1.5, 0xFFFFFF, 0.8);
             button.beginFill(0x0088FF);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             const text = new PIXI.Text('Events',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
@@ -15,6 +18,7 @@ import Utils from './Utils.js';
             text.interactive = false;
             button.mouseover = () => {
                 button.clear();
+                button.lineStyle(1.5, 0xFFFFFF, 0.8);
                 button.beginFill(0x38A0FB);
                 button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
                 button.endFill();
@@ -23,6 +27,8 @@ import Utils from './Utils.js';
             }
             button.mouseout = () => {
                 button.clear();
+                button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
                 button.beginFill(0x0088FF);
                 button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
                 button.endFill();
@@ -31,18 +37,23 @@ import Utils from './Utils.js';
 
             }
             button.mousedown = () => {
-                const chatSendEvent = new CustomEvent('chatSend');
-                document.dispatchEvent(chatSendEvent);
+                if(!myLife.UI.eventsOpen) {
+                    new EventsList(myLife, myLife.UI)
+                    myLife.UI.eventsOpen = true;
+                }
+
             }
-            app.stage.addChild(button);
+           stage.addChild(button);
         }
 
 
 }
 
 class BuddiesButton {
-    constructor(app) {
+    constructor(myLife, stage) {
         const button = new PIXI.Graphics();
+        button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
         button.beginFill(0x0088FF);
         button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
         const text = new PIXI.Text('Buddies',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
@@ -56,6 +67,8 @@ class BuddiesButton {
         text.interactive = false;
         button.mouseover = () => {
             button.clear();
+            button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
             button.beginFill(0x38A0FB);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
@@ -64,6 +77,8 @@ class BuddiesButton {
         }
         button.mouseout = () => {
             button.clear();
+            button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
             button.beginFill(0x0088FF);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
@@ -75,15 +90,17 @@ class BuddiesButton {
             const chatSendEvent = new CustomEvent('chatSend');
             document.dispatchEvent(chatSendEvent);
         }
-        app.stage.addChild(button);
+        stage.addChild(button);
     }
 
 
 }
 
 class InventoryButton {
-    constructor(app) {
+    constructor(myLife, stage) {
         const button = new PIXI.Graphics();
+        button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
         button.beginFill(0x0088FF);
         button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
         const text = new PIXI.Text('Inventory',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
@@ -97,6 +114,8 @@ class InventoryButton {
         text.interactive = false;
         button.mouseover = () => {
             button.clear();
+            button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
             button.beginFill(0x38A0FB);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
@@ -105,6 +124,8 @@ class InventoryButton {
         }
         button.mouseout = () => {
             button.clear();
+            button.lineStyle(1.5, 0xFFFFFF, 0.8);
+
             button.beginFill(0x0088FF);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
@@ -113,19 +134,21 @@ class InventoryButton {
 
         }
         button.mousedown = () => {
-            const chatSendEvent = new CustomEvent('chatSend');
-            document.dispatchEvent(chatSendEvent);
+            if(!myLife.UI.inventoryOpen) {
+                new Inventory(myLife,myLife.UI)
+                myLife.UI.inventoryOpen = true;
+            }
         }
-        app.stage.addChild(button);
+        stage.addChild(button);
     }
 
 
 }
 
 export default class UIButtons {
-    constructor(app) {
-        new EventButton(app);
-        new BuddiesButton(app);
-        new InventoryButton(app);
+    constructor(myLife,stage) {
+        new EventButton(myLife,stage);
+        new BuddiesButton(myLife,stage);
+        new InventoryButton(myLife,stage);
     }
 }
