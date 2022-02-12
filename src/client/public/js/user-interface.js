@@ -1,6 +1,6 @@
 import Inventory from './inventory.js';
 import DevTools from "./dev-tools.js";
-import EventsList from './lab.js';
+import EventsList from './events-list.js';
 import Utils from "./utils.js";
 export default class UserInterface {
     constructor(myLifeEvents) {
