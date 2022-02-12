@@ -79,6 +79,10 @@ export default class Events {
 
         });
 
+        document.addEventListener('eventsUpdate', (e) => {
+            myLife.updateEvents(e.detail.events);
+        })
+
         document.addEventListener('chatSend', (e) => {
             this.myLife.divinity.sendChat(this.myLife.myUserId, this.myLife.chatBox.text);
             this.myLife.chatBox.text = '';
