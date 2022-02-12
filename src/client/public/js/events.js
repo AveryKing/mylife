@@ -79,6 +79,11 @@ export default class Events {
 
         });
 
+        document.addEventListener('chatSend', (e) => {
+            this.myLife.divinity.sendChat(this.myLife.myUserId, this.myLife.chatBox.text);
+            this.myLife.chatBox.text = '';
+        })
+
         document.addEventListener('chatMessageReceived', (e) => {
             const fromUser = e.detail.fromUser;
             const messageText = e.detail.text;
@@ -90,10 +95,11 @@ export default class Events {
         })
     }
 
-    chatMessageSent(msg) {
-        this.myLife.divinity.sendChat(this.myLife.myUserId, Utils.get('chat-input-text').text);
-        Utils.get('chat-input-text').text = '';
+    chatMessageSent() {
+        this.myLife.divinity.sendChat(this.myLife.myUserId,this.myLife.chatBox.text);
+        this.myLife.chatBox.text = '';
     }
+
     setupGameUIEvents() {
         Utils.get('chat-form').onsubmit = (e) => {
             e.preventDefault();

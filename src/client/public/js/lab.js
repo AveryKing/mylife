@@ -10,10 +10,11 @@ export default class GenericButton {
         button.addChild(text);
         button.endFill();
         button.x = 523;
-        button.y = 510.5;
+        button.y = 510.5
 
         button.interactive = true;
 
+        text.interactive = false;
         button.mouseover = () => {
             button.clear();
             button.beginFill(0x38A0FB);
@@ -33,9 +34,11 @@ export default class GenericButton {
 
         }
 
+
+
         button.mousedown = () => {
-            alert(1);
-            Utils.get('chat-form').submit();
+            const chatSendEvent = new CustomEvent('chatSend');
+            document.dispatchEvent(chatSendEvent);
         }
         app.stage.addChild(button);
     }

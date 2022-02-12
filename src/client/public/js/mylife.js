@@ -18,6 +18,7 @@ export default class MyLife {
         this.usersInRoom = {};
         this.userPositions = [];
         this.chatMessages = [];
+        this.chatBox = undefined;
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
         this.inventory = undefined;
@@ -100,7 +101,14 @@ export default class MyLife {
         input.x = 380
         input.y = 522
         input.pivot.x = input.width/2
-        input.pivot.y = input.height/2
+        input.pivot.y = input.height/2;
+        document.addEventListener('keydown', (e) => {
+            if(e.code === "Enter") {
+                const chatSendEvent = new CustomEvent('chatSend');
+                document.dispatchEvent(chatSendEvent);
+            }
+        })
+        this.chatBox = input;
         app.stage.addChild(input)
         new GenericButton(app);
 
