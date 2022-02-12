@@ -19,14 +19,16 @@ export default class DevTools {
             myLife.divinity.changeRoom(window.prompt('Enter room ID'));
         }
         mainDiv.appendChild(switchRoom);
-        let clearAvatars = document.createElement('button');
-        clearAvatars.innerText = 'Clear Avatars';
+        let createEvent = document.createElement('button');
+        createEvent.innerText = 'Create event';
+        createEvent.style.borderRadius = '8px';
         switchRoom.style.marginTop = '30px';
         switchRoom.style.marginLeft = '10px';
-        clearAvatars.onclick = () => {
-            myLife.removeMyAvatar();
+        switchRoom.style.marginRight = '30px';
+        createEvent.onclick = () => {
+            myLife.divinity.createEvent(window.prompt('Enter event name'));
         }
-        mainDiv.appendChild(clearAvatars);
+        mainDiv.appendChild(createEvent);
         $('#dev-tools').draggable();
     }
 }

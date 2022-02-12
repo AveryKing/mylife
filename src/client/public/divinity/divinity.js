@@ -26,6 +26,12 @@ export default class Divinity {
     getBuddyList() {
       this.game.send(Commands.getBuddyList());
     }
+    getEvents() {
+        this.game.send(Commands.getEvents());
+    }
+    createEvent(eventName) {
+        this.game.send(Commands.createEvent(eventName));
+    }
 
 
 

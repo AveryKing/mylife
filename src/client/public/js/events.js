@@ -23,6 +23,7 @@ export default class Events {
         })
 
         document.addEventListener('roomLoaded', (e) => {
+            myLife.divinity.getEvents();
             e.detail.forEach(player => {
                 const newObj = {};
                 myLife.removeOldAvatars();
@@ -80,7 +81,7 @@ export default class Events {
         });
 
         document.addEventListener('eventsUpdate', (e) => {
-            myLife.updateEvents(e.detail.events);
+            myLife.updateEvents(e.detail);
         })
 
         document.addEventListener('chatSend', (e) => {

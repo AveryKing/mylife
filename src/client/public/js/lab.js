@@ -1,5 +1,7 @@
 export default class EventsList {
-    constructor(myLife) {
+    constructor(myLife, parent) {
+        myLife.eventsList = this;
+        this.myLife = myLife;
         const div = document.createElement('div');
         div.style.display = 'flex';
         div.style.height = '350px';
@@ -48,6 +50,10 @@ export default class EventsList {
                 exit.style.backgroundColor = '#FF0000';
             }
         )
+        exit.onclick = () => {
+            div.remove();
+            parent.eventsOpen = false;
+        }
         header.appendChild(exit);
         const heading = document.createElement('h2');
         heading.style.fontFamily = 'Ubuntu';
@@ -62,35 +68,16 @@ export default class EventsList {
         mainPanel.style.position = 'relative';
         mainPanel.style.top = '10px';
         mainPanel.style.width = '90%';
+        mainPanel.style.backgroundColor = '#FFFFFF';
+        mainPanel.style.overflowY = 'scroll';
+        div.style.backgroundColor = '#FFFFFF';
         mainPanel.style.height = '75%';
         div.appendChild(mainPanel);
-        mainPanel.style.overflowY = 'scroll';
-/// Events ///
-        myLife.events.forEach(event => {
-            const evt = document.createElement('div');
-            evt.style.display = 'flex';
-            evt.style.justifyContent = 'center';
-            evt.style.alignItems = 'center';
-            const evtName = document.createElement('span');
-            evtName.innerText = `${event.name}`;
-            evtName.style.position = 'absolute';
-            evtName.fontSize = '10px';
-            evt.appendChild(evtName);
-            evt.style.backgroundColor = 'rgba(224,236,246,0.74)';
-            evt.style.borderBottom = '1px solid black';
-            evt.style.borderRight = '1px solid black';
-            evt.style.height = '20px';
-            evt.style.width = '99.4%';
-            evt.style.cursor = 'pointer';
-            evt.addEventListener('mouseover', (e) => {
-                evt.style.backgroundColor = 'rgb(196,224,248)';
-            })
-            evt.addEventListener('mouseout', (e) => {
-                evt.style.backgroundColor = 'rgba(224,236,246,0.74)';
-            })
-            mainPanel.appendChild(evt);
-        })
+        this.mainPanel = mainPanel;
 
+/// Events ///
+
+        this.loadEvents();
 
 /////////////
         const createEvent = document.createElement('button');
@@ -121,6 +108,41 @@ export default class EventsList {
         div.appendChild(createEvent);
         document.body.appendChild(div);
         $('#events-list').draggable();
+    }
+
+    loadEvents() {
+        this.myLife.events.forEach(event => {
+                if(!this.mainPanel.innerHTML.includes(`data-event-id="${event.id}"`)) {
+                    const evt = document.createElement('div');
+                    evt.classList.add('listed-event');
+                    evt.dataset.eventId = event.id;
+                    evt.style.display = 'flex';
+                    evt.style.justifyContent = 'center';
+                    evt.style.alignItems = 'center';
+                    const evtName = document.createElement('span');
+                    evtName.innerText = `${event.name}`;
+                    evtName.style.position = 'absolute';
+                    evtName.fontSize = '10px';
+                    console.log("APPENDING EVENT")
+                    evt.appendChild(evtName);
+                    evt.style.backgroundColor = 'rgba(224,236,246,0.74)';
+                    evt.style.borderBottom = '1px solid black';
+                    evt.style.borderRight = '1px solid black';
+                    evt.style.height = '20px';
+                    evt.style.width = '99.4%';
+                    evt.style.cursor = 'pointer';
+                    evt.addEventListener('mouseover', (e) => {
+                        evt.style.backgroundColor = 'rgb(196,224,248)';
+                    })
+                    evt.addEventListener('mouseout', (e) => {
+                        evt.style.backgroundColor = 'rgba(224,236,246,0.74)';
+                    })
+                    this.mainPanel.appendChild(evt);
+
+                }
+
+
+        })
     }
 }
 

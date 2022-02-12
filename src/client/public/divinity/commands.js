@@ -53,4 +53,19 @@ export default class Commands {
             }
         })
     }
+
+    static getEvents() {
+        return JSON.stringify({
+            "cmd":"getEvents"
+        })
+    }
+
+    static createEvent(eventName) {
+        return JSON.stringify({
+            "cmd":"createEvent",
+            "data": {
+                "name":eventName
+            }
+        })
+    }
 }
