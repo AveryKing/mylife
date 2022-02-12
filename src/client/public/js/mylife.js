@@ -5,6 +5,7 @@ import PlayerContextMenu from "./player-context-menu.js";
 import BuddyList from './buddy-list.js';
 import UserInterface from "./user-interface.js";
 import GenericButton from "./generic-button.js";
+import UIButtons from "./generic-button-2.js";
 
 export default class MyLife {
     constructor(divinity) {
@@ -116,6 +117,8 @@ export default class MyLife {
         this.chatBox = input;
         app.stage.addChild(input)
         new GenericButton(app);
+        const eventsBtn = new UIButtons(app);
+
 
         /**
          * Event listeners (walking & changing directions
