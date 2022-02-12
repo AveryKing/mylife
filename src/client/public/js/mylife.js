@@ -4,7 +4,7 @@ import Utils from './utils.js';
 import PlayerContextMenu from "./player-context-menu.js";
 import BuddyList from './buddy-list.js';
 import UserInterface from "./user-interface.js";
-import GenericButton from "./lab.js";
+import GenericButton from "./generic-button.js";
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -18,6 +18,7 @@ export default class MyLife {
         this.usersInRoom = {};
         this.userPositions = [];
         this.chatMessages = [];
+        this.events = undefined;
         this.chatBox = undefined;
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
@@ -129,6 +130,12 @@ export default class MyLife {
         })
 
         return app;
+    }
+
+    updateEvents(events) {
+        events.forEach(event => {
+            console.log(event)
+        })
     }
 
     toggleStageInteractive() {
