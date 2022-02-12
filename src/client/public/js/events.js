@@ -42,7 +42,8 @@ export default class Events {
         document.addEventListener('roomData', (e) => {
             console.table(e.detail);
             myLife.currentRoomName.text = e.detail.roomName;
-            myLife.currentRoomId.text = e.detail.roomId;
+            myLife.currentRoomId = e.detail.roomId;
+            console.log(myLife.currentRoomId)
         })
 
         document.addEventListener('loadBuddyList', (e) => {

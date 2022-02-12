@@ -137,7 +137,7 @@ export default class EventsList {
                     evt.style.backgroundColor = 'rgba(224,236,246,0.74)';
                 });
                 evt.addEventListener('click', (e) => {
-                    if(!this.myLife.currentRoomId === event.room) {
+                    if(this.myLife.currentRoomId !== event.room) {
                         this.myLife.divinity.changeRoom(event.room);
                     }
                 })
