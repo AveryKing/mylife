@@ -5,7 +5,7 @@ import Inventory from "./inventory.js";
         constructor(myLife, stage) {
             const button = new PIXI.Graphics();
             button.lineStyle(1.5, 0xFFFFFF, 0.8);
-            button.beginFill(0x0088FF);
+            button.beginFill(0x7A7B7C);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             const text = new PIXI.Text('Events',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
             text.x += 16
@@ -29,7 +29,7 @@ import Inventory from "./inventory.js";
                 button.clear();
                 button.lineStyle(1.5, 0xFFFFFF, 0.8);
 
-                button.beginFill(0x0088FF);
+                button.beginFill(0x7A7B7C);
                 button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
                 button.endFill();
                 button.x = 195;
@@ -54,7 +54,7 @@ class BuddiesButton {
         const button = new PIXI.Graphics();
         button.lineStyle(1.5, 0xFFFFFF, 0.8);
 
-        button.beginFill(0x0088FF);
+        button.beginFill(0x7A7B7C);
         button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
         const text = new PIXI.Text('Buddies',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
         text.x += 14
@@ -79,7 +79,7 @@ class BuddiesButton {
             button.clear();
             button.lineStyle(1.5, 0xFFFFFF, 0.8);
 
-            button.beginFill(0x0088FF);
+            button.beginFill(0x7A7B7C);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
             button.x = 411;
@@ -101,7 +101,7 @@ class InventoryButton {
         const button = new PIXI.Graphics();
         button.lineStyle(1.5, 0xFFFFFF, 0.8);
 
-        button.beginFill(0x0088FF);
+        button.beginFill(0x7A7B7C);
         button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
         const text = new PIXI.Text('Inventory',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
         text.x += 10
@@ -126,7 +126,7 @@ class InventoryButton {
             button.clear();
             button.lineStyle(1.5, 0xFFFFFF, 0.8);
 
-            button.beginFill(0x0088FF);
+            button.beginFill(0x7A7B7C);
             button.drawRoundedRect(0, 0, 86, 29, 5,20,20);
             button.endFill();
             button.x = 519;

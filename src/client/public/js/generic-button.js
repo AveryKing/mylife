@@ -5,7 +5,7 @@ export default class GenericButton {
         button.beginFill(0xD7DADD);
         button.drawRoundedRect(0, 0, 73, 25, 15,20,20);
         const text = new PIXI.Text('Send',new PIXI.TextStyle({fontSize: 17,fill:0xffffff}));
-        text.x += 14
+        text.x += 15;
         text.y += 3.5;
         button.addChild(text);
         button.endFill();

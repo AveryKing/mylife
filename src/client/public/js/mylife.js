@@ -72,26 +72,34 @@ export default class MyLife {
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
         const {coins} = playerData.playerData;
-        const coinBalance = new PIXI.Text(`Coins: ${coins}`, new PIXI.TextStyle({fontSize: 17}));
+        const coinBalance = new PIXI.Text(coins, new PIXI.TextStyle({fontFamily:"Arial",fontSize: 17,fill:0xffffff}));
         coinBalance.y = 10;
         coinBalance.x = 10;
         this.stage = app.stage;
-        app.stage.addChild(coinBalance);
-        const roomName = new PIXI.Text(this.currentRoomName, new PIXI.TextStyle({fontSize: 17}));
+
+        const roomName = new PIXI.Text(this.currentRoomName, new PIXI.TextStyle({fontSize: 17, fill:0xffffff}));
         roomName.x = 620;
         roomName.y = 10;
         this.currentRoomName = roomName;
-        app.stage.addChild(roomName);
         app.stage.interactive = true
         const bottomHudSvg = "assets/bottom-hud.svg";
+        const topHudSvg = "assets/top-hud.svg";
         const baseTexture = new PIXI.resources.SVGResource("assets/bottom-hud.svg", {
             scale: 1
         })
+        const baseTexture2 = new PIXI.resources.SVGResource("assets/top-hud.svg", {
+            scale: 1
+        })
         const bottomHudTexture = new PIXI.Texture.from(baseTexture);
+        const topHudTexture = new PIXI.Texture.from(baseTexture2);
         const bottomHud = new PIXI.Sprite.from(bottomHudTexture);
+        const topHud = new PIXI.Sprite.from(topHudTexture);
         bottomHud.y = 500;
 
         app.stage.addChild(bottomHud);
+        app.stage.addChild(topHud);
+        app.stage.addChild(coinBalance);
+        app.stage.addChild(roomName);
         this.UI = new UserInterface(this.myLifeEvents);
 
         const input = new PIXI.TextInput({
