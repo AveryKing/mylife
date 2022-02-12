@@ -26,6 +26,7 @@ export default class MyLife {
         this.playerContextMenuOpen = false;
         this.inventory = undefined;
         this.currentRoomName = undefined;
+        this.currentRoomId = undefined;
     }
 
     setup() {
