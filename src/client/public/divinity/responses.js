@@ -10,4 +10,5 @@ export default class Responses {
     static InventoryItemRemoved = 'inventoryItemRemoved';
     static LoadBuddyListResponse = 'loadBuddyList';
     static InventoryLoaded = 'loadInventory';
+    static EventsUpdated = 'eventsUpdate';
 }

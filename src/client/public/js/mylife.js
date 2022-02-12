@@ -5,6 +5,7 @@ import PlayerContextMenu from "./player-context-menu.js";
 import BuddyList from './buddy-list.js';
 import UserInterface from "./user-interface.js";
 import GenericButton from "./generic-button.js";
+
 export default class MyLife {
     constructor(divinity) {
         this.myLifeEvents = new Events(this, new Login());
@@ -18,7 +19,8 @@ export default class MyLife {
         this.usersInRoom = {};
         this.userPositions = [];
         this.chatMessages = [];
-        this.events = undefined;
+        this.events = [];
+        this.eventsList = undefined;
         this.chatBox = undefined;
         this.mouseOverAvatar = false;
         this.playerContextMenuOpen = false;
@@ -30,12 +32,13 @@ export default class MyLife {
         return PIXI.Loader.shared.resources["assets/spritesheet.json"]
 
     }
+
     buildGameCanvas(playerData) {
         // Draws HTML5 Canvas
         const app = new PIXI.Application({
             width: 800,
             height: 600,
-            antialias:true,
+            antialias: true,
             backgroundColor: 0xFFFFFF,
         });
 
@@ -66,12 +69,12 @@ export default class MyLife {
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
         const {coins} = playerData.playerData;
-        const coinBalance = new PIXI.Text(`Coins: ${coins}`,new PIXI.TextStyle({fontSize: 17}));
+        const coinBalance = new PIXI.Text(`Coins: ${coins}`, new PIXI.TextStyle({fontSize: 17}));
         coinBalance.y = 10;
         coinBalance.x = 10;
         this.stage = app.stage;
         app.stage.addChild(coinBalance);
-        const roomName = new PIXI.Text(this.currentRoomName,new PIXI.TextStyle({fontSize: 17}));
+        const roomName = new PIXI.Text(this.currentRoomName, new PIXI.TextStyle({fontSize: 17}));
         roomName.x = 620;
         roomName.y = 10;
         this.currentRoomName = roomName;
@@ -79,14 +82,14 @@ export default class MyLife {
         app.stage.interactive = true
         const bottomHudSvg = "assets/bottom-hud.svg";
         const baseTexture = new PIXI.resources.SVGResource("assets/bottom-hud.svg", {
-            scale:1
+            scale: 1
         })
         const bottomHudTexture = new PIXI.Texture.from(baseTexture);
         const bottomHud = new PIXI.Sprite.from(bottomHudTexture);
         bottomHud.y = 500;
 
         app.stage.addChild(bottomHud);
-        new UserInterface(this.myLifeEvents);
+        this.UI = new UserInterface(this.myLifeEvents);
 
         const input = new PIXI.TextInput({
             input: {
@@ -101,10 +104,10 @@ export default class MyLife {
         input.placeholder = 'Enter chat message here...'
         input.x = 380
         input.y = 522
-        input.pivot.x = input.width/2
-        input.pivot.y = input.height/2;
+        input.pivot.x = input.width / 2
+        input.pivot.y = input.height / 2;
         document.addEventListener('keydown', (e) => {
-            if(e.code === "Enter") {
+            if (e.code === "Enter") {
                 const chatSendEvent = new CustomEvent('chatSend');
                 document.dispatchEvent(chatSendEvent);
             }
@@ -122,7 +125,7 @@ export default class MyLife {
             }
         })
         app.view.addEventListener('mousemove', (e) => {
-            if(this.getMousePosition(app.view, e).x > this.myAvatar.x) {
+            if (this.getMousePosition(app.view, e).x > this.myAvatar.x) {
                 this.myAvatar.faceRight();
             } else {
                 this.myAvatar.faceLeft();
@@ -133,9 +136,23 @@ export default class MyLife {
     }
 
     updateEvents(events) {
-        events.forEach(event => {
-            console.log(event)
+        this.events = [];
+        Object.values(events).forEach(event => {
+            let eventId = Object.keys(events).find(x => events[x] === event)
+                .replace(/\D/g,'');
+            event.id = eventId;
+            this.events.push(event);
+        });
+        this.events.forEach(event => {
+            if(!this.events.some(x => x.id === event.id)) {
+                this.events.push(event);
+            }
         })
+
+        if (this.UI.eventsOpen) {
+            this.eventsList.loadEvents();
+        }
+
     }
 
     toggleStageInteractive() {
@@ -150,14 +167,14 @@ export default class MyLife {
     addAvatarToStage(player, isMe, coordinates) {
         const newAvatar = isMe ? this.myAvatar = this.drawAvatar(player, coordinates) : this.avatar = this.drawAvatar(player, coordinates);
         this.app.stage.addChild(newAvatar);
-        newAvatar.stopWalking = function test(newAvatar){
-           alert(1)
+        newAvatar.stopWalking = function test(newAvatar) {
+            alert(1)
         }
         return newAvatar;
     }
 
     removeAvatarFromStage(userId) {
-        if(userId === 0) {
+        if (userId === 0) {
             this.app.stage.removeChild(this.avatarSprite);
             this.userPositions = this.userPositions.filter(user => !user.hasOwnProperty(this.myUserId));
         } else {
@@ -169,10 +186,12 @@ export default class MyLife {
 
     removeOldAvatars() {
         this.userPositions.forEach(user => {
-           Object.values(user)[0].removeFromStage();
+            Object.values(user)[0].removeFromStage();
         })
     }
-hi
+
+    hi
+
     getMousePosition(canvas, event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -185,7 +204,7 @@ hi
         const style = new PIXI.TextStyle({fontSize: 20});
         const avatarName = new PIXI.Text(username, style);
         namePlate.beginFill(0xC7C7C7);
-        namePlate.drawRoundedRect(0, 0, 80, 20, 10,20,20);
+        namePlate.drawRoundedRect(0, 0, 80, 20, 10, 20, 20);
         namePlate.endFill();
         namePlate.y += 70;
         namePlate.x -= 35;
@@ -240,13 +259,13 @@ hi
         }
 
         avatar.faceRight = () => {
-            if(!this.currentlyWalking) {
+            if (!this.currentlyWalking) {
                 avatar.children[0].scale.x = .225;
             }
 
         }
         avatar.faceLeft = () => {
-            if(!this.currentlyWalking) {
+            if (!this.currentlyWalking) {
 
                 avatar.children[0].scale.x = -.225;
             }
@@ -259,7 +278,7 @@ hi
 
         avatar.stopWalk = () => {
 
-                avatar.children[0].gotoAndStop(0);
+            avatar.children[0].gotoAndStop(0);
 
 
         }
@@ -271,7 +290,7 @@ hi
                     "userId": player.userId
                 }
             });
-            if(player.userId !== this.myUserId) {
+            if (player.userId !== this.myUserId) {
                 document.dispatchEvent(userLeftEvent);
 
             }
@@ -295,8 +314,10 @@ hi
         isMe && this.divinity.player.move({x: x, y: y});
         const movedAvatar = isMe ? this.myAvatar : this.getAvatarById(userId);
         movedAvatar.doWalk();
-        gsap.to(movedAvatar, {duration: 3, x: x, y: y,
-            onComplete:movedAvatar.stopWalk})
+        gsap.to(movedAvatar, {
+            duration: 3, x: x, y: y,
+            onComplete: movedAvatar.stopWalk
+        })
     }
 
 

@@ -95,7 +95,11 @@ export default class EventHandler {
                     detail: data.data
                 })
                 break;
-
+            case Responses.EventsUpdated:
+                const eventsUpdated = new CustomEvent('eventsUpdate', {
+                    detail: data.data
+                })
+                document.dispatchEvent(eventsUpdated);
         }
     }
 

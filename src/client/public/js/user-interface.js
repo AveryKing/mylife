@@ -1,9 +1,11 @@
 import Inventory from './inventory.js';
 import DevTools from "./dev-tools.js";
+import EventsList from './lab.js';
 import Utils from "./utils.js";
 export default class UserInterface {
     constructor(myLifeEvents) {
         this.inventoryOpen = false;
+        this.eventsOpen = false;
         let chatForm = document.createElement('form');
         chatForm.id = 'chat-form';
         chatForm.style.display = 'flex';
@@ -44,7 +46,6 @@ export default class UserInterface {
         let buddiesButton = document.createElement('button');
         let inventoryButton = document.createElement('button');
         buddiesButton.classList.add('button-4');
-
         inventoryButton.classList.add('button-4');
         let devTools = document.createElement('button');
         devTools.classList.add('button-4');
@@ -57,7 +58,6 @@ export default class UserInterface {
 
         }
         menu.appendChild(devTools);
-
         buddiesButton.innerText = 'View Buddies';
         inventoryButton.innerText = 'View Inventory';
         inventoryButton.onclick = () => {
@@ -66,6 +66,16 @@ export default class UserInterface {
                 this.inventoryOpen = true;
             }
         }
+        const eventsButton = document.createElement('button');
+        eventsButton.classList.add('button-4');
+        eventsButton.innerText = 'View Events';
+        eventsButton.onclick = () => {
+            if(!this.eventsOpen) {
+                new EventsList(myLifeEvents.myLife, this);
+                this.eventsOpen = true;
+            }
+        }
+        menu.appendChild(eventsButton)
        menu.appendChild(buddiesButton);
         menu.appendChild(inventoryButton);
         menu.style.display = 'flex';
