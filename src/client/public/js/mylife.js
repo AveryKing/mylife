@@ -66,15 +66,14 @@ export default class MyLife {
         app.view.style.position = 'absolute';
         app.view.style.zIndex = -1;
         app.view.style.borderRadius = "10px";
-        app.view.style.top = '10px';
         const div = document.createElement('div');
         div.id = 'mainDiv';
         document.body.appendChild(div)
         Utils.get('mainDiv').appendChild(app.view);
         const {coins} = playerData.playerData;
         const coinBalance = new PIXI.Text(coins, new PIXI.TextStyle({fontFamily:"Arial",fontSize: 17,fill:0xffffff}));
-        coinBalance.y = 10;
-        coinBalance.x = 10;
+        coinBalance.y = 13;
+        coinBalance.x = 25;
         this.stage = app.stage;
 
         const roomName = new PIXI.Text(this.currentRoomName, new PIXI.TextStyle({fontSize: 17, fill:0xffffff}));
