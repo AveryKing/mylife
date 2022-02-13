@@ -22,6 +22,39 @@ heading.innerText = 'Store';
 heading.style.fontFamily =  'Ubuntu';
 heading.style.color = 'white';
 header.appendChild(heading);
+
+const clothingStoreButton = document.createElement('CS');
+clothingStore.style.borderRadius = '10px';
+clothingStore.style.backgroundColor = '#E9EAE7';
+clothingStore.innerText = 'Clothing';
+clothingStore.style.display = 'flex';
+clothingStore.style.fontFamily = 'Ubuntu';
+clothingStore.style.color = '#000000';
+clothingStore.style.position = 'relative';
+clothingStore.style.top = '-100px';
+clothingStore.style.left = '10px';
+clothingStore.style.justifyContent = 'center';
+clothingStore.style.alignItems = 'center';
+clothingStore.style.fontSize = '40px';
+clothingStore.style.height = '135px';
+clothingStore.style.width = '135px';
+clothingStore.style.cursor = 'pointer';
+clothingStore.style.userSelect = 'none';
+
+clothingStore.addEventListener('mouseover', (e) => {
+    clothingStore.style.backgroundColor = '#8C8C8B';
+})
+clothingStore.addEventListener('mouseout', (e) => {
+    clothingStore.style.backgroundColor = 'rgb(20,20,200)';
+})
+clothingStore.addEventListener('mousedown', (e) => {
+    clothingStore.style.backgroundColor = 'rgb(40,40,200)'
+})
+clothingStore.addEventListener('mouseup', (e) => {
+        clothingStore.style.backgroundColor = '#8C8C8B';
+    }
+)
+
 const exitButton = document.createElement('div');
 exitButton.style.borderRadius = '100px';
 exitButton.style.backgroundColor = '#FF0000';
@@ -56,5 +89,6 @@ exitButton.addEventListener('mouseup', (e) => {
 header.appendChild(exitButton);
 div.appendChild(header);
 document.body.appendChild(div);
+document.body.appendChild(CS);
 
 $('#store-div').draggable();
